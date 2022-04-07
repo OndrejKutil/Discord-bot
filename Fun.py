@@ -54,8 +54,8 @@ class Fun(commands.Cog):
         querystring = {"term":f"{word}"}
 
         headers = {
-            'x-rapidapi-host': "mashape-community-urban-dictionary.p.rapidapi.com",
-            'x-rapidapi-key': "6db453f516msh40b9cd8c6b63816p1841fdjsn132b49d86bc5"
+            'x-rapidapi-host': "DONT HAVE TO KNOW THIS",
+            'x-rapidapi-key': "AND THIS TOO"
             }
 
         data = requests.get(url=url, headers=headers, params=querystring).json()
