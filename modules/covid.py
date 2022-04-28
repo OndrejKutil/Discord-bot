@@ -1,38 +1,14 @@
+from nextcord import Interaction
 import nextcord
 from nextcord.ext import commands
-import requests
-import csv
-import requests
-import datetime
-
-
-def get_data():
-    
-    url = "https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/zakladni-prehled.csv"
-    with requests.Session() as s:
-        download = s.get(url)
-        decoded_content = download.content.decode("utf-8")
-
-        cr = csv.reader(decoded_content.splitlines(), delimiter=",")
-        my_list = list(cr)
-        
-        text = my_list[0]
-        numbers = my_list[1]
-        
-        datum = str(datetime.date.today())     
-        nakazeni_vcera = numbers[8]
-        hospitalizovani = numbers[6]
-        aktivni_covid = numbers[3]
-        testy = numbers[7]
-
-        return datum, nakazeni_vcera, hospitalizovani, aktivni_covid, testy
+from functions.get_covid_data import get_data
 
 class Covid(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
-    async def covid(self, ctx):
+    @nextcord.slash_command(description='Gets COVID-19 data for Czech republic')
+    async def covid(self, interaction : Interaction):
         emb = nextcord.Embed(
             title="Covid-19",
             colour = nextcord.Colour.red()
@@ -47,7 +23,7 @@ class Covid(commands.Cog):
         emb.add_field(name="Testovaných včera:", value=tes, inline=False)
         emb.set_thumbnail(url=url)
 
-        await ctx.send(embed=emb)
+        await interaction.response.send_message(embed=emb)
         print("Command -- covid.py -- covid")
         
 def setup(bot):

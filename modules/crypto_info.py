@@ -1,9 +1,9 @@
 import nextcord
 from nextcord.ext import commands
 import requests
-from get_czk import cur_conversion
+from functions.get_czk import cur_conversion
 
-api_key = "YOUR OWN KEY"
+api_key = "KEY"
 
 class Crypto_info(commands.Cog):
     def __init__(self, bot):

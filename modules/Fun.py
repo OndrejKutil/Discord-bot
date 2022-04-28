@@ -1,3 +1,5 @@
+from unittest import result
+from nextcord import Interaction, SlashOption
 import nextcord
 from nextcord.ext import commands
 import random
@@ -8,18 +10,23 @@ class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(description="random choice from two arguments")
-    async def coinflip(self, ctx, *a):
+    @nextcord.slash_command(description="random choice from two arguments")
+    async def coinflip(
+        self,
+        interaction : Interaction, 
+        first : str = SlashOption(description="First argument", required=True),
+        second : str = SlashOption(description="Second argument", required=True)
+        ):
         embed14 = nextcord.Embed(
             title = "Coin flip",
-            colour = ctx.author.colour
-        )   
-        result = random.choice(a)
-        print(a)
-        
+            colour = nextcord.Colour.blurple()
+        )
+        result_list = [first, second]
+        result = random.choice(result_list)
+
         embed14.set_thumbnail(url="https://i.pinimg.com/originals/d7/49/06/d74906d39a1964e7d07555e7601b06ad.gif")
         embed14.add_field(name="Flip result", value=result)
-        await ctx.send(embed=embed14)
+        await interaction.response.send_message(embed=embed14)
         print("Command -- Fun.py -- coinflip")
 
     
@@ -54,8 +61,8 @@ class Fun(commands.Cog):
         querystring = {"term":f"{word}"}
 
         headers = {
-            'x-rapidapi-host': "DONT HAVE TO KNOW THIS",
-            'x-rapidapi-key': "AND THIS TOO"
+            'x-rapidapi-host': "HOST",
+            'x-rapidapi-key': "KEY"
             }
 
         data = requests.get(url=url, headers=headers, params=querystring).json()

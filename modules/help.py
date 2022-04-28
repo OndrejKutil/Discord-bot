@@ -22,7 +22,9 @@ class HelpPageSource(menus.ListPageSource):
         embed = nextcord.Embed(title="Bot Commands", colour=self._help_command.COLOUR)
         embed.description = (
             f'Use "{prefix}{invoked_with} command" for more info on a command.\n'
-            f'Use "{prefix}{invoked_with} category" for more info on a category.'
+            f'Use "{prefix}{invoked_with} category" for more info on a category.\n'
+            "\n"
+            f'Also dont forget to check out my slash commands.'
         )
         # add the entries to the embed
         for entry in entries:

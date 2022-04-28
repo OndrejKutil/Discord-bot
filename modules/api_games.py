@@ -1,16 +1,13 @@
+from nextcord import Interaction
 import nextcord
 from nextcord.ext import commands
 import requests
 import datetime
 
-#apex api link - https://apexlegendsapi.com/documentation.php
-
 class Dropdown(nextcord.ui.Select):
     def __init__(self):
 
-        self.apex_key = "YOUR OWN KEY"
-        self.api_key_epic = "YOUR OWN KEY"
-        self.riot_key = "YOUR OWN KEY"
+        self.apex_key = "KEY"
 
         options = [
 
@@ -106,9 +103,11 @@ class DropdownView(nextcord.ui.View):
 class Games(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.api_key_epic = "KEY"
+        self.riot_key = "KEY"
 
-    @commands.command()
-    async def apex_map(self, ctx):
+    @nextcord.slash_command(description='Gets current Apex legends map rotation')
+    async def apex_map(self, interaction : Interaction):
         emb = nextcord.Embed(
             title="Apex map rotation",
             description="please select which game mode: ",
@@ -117,25 +116,9 @@ class Games(commands.Cog):
         
         view = DropdownView()
 
-        await ctx.send(embed=emb, view=view)
+        await interaction.response.send_message(embed=emb, view=view)
         print("Command -- api_games.py -- apex_map")
-            
-
-    @commands.command(description="Sends current apex crafting rotation")
-    async def apex_cr(self, ctx):
-        emb = nextcord.Embed(
-            title="Apex crafting cotation",
-            colour=nextcord.Colour.blurple()
-        )
-        url = f"https://api.mozambiquehe.re/crafting?&auth={self.apex_key}"
-
-        response = requests.get(url=url)
-        data = response.json()
-    
-    
-    
-    
-    
+  
     
     @commands.command(description="Sends currently free games on epic")
     async def epic_free(self, ctx):
@@ -145,7 +128,7 @@ class Games(commands.Cog):
         )
         url_epic = "https://free-epic-games.p.rapidapi.com/free"
         headers_epic = {
-            'x-rapidapi-host': "free-epic-games.p.rapidapi.com",
+            'x-rapidapi-host': "HOST",
             'x-rapidapi-key': f"{self.api_key_epic}"
         }
 
@@ -164,8 +147,6 @@ class Games(commands.Cog):
         await ctx.send(embed=embed11)
         print("Command -- api_games.py -- epic_free")
   
-        
-
 
     @commands.command(description="Sends apex stats for given player")
     async def apex_stats(self, ctx, player_name):
@@ -198,8 +179,6 @@ class Games(commands.Cog):
         await ctx.send(embed=embed12)
         print("Command -- api_games.py -- apex_stats")
    
-        
-
 
     @commands.command(description="Sends stats for given summoner")
     async def riot_stats(self, ctx, summoner_name):

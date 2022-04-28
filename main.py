@@ -1,12 +1,21 @@
 import nextcord
 from nextcord.ext import commands
+import os
+import logging
+
+logger = logging.getLogger('nextcord')
+logger.setLevel(logging.INFO)
+handler = logging.FileHandler(filename='./nextcord.log', encoding='utf-8', mode='w')
+handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(handler)
 
 token = "YOUR OWN TOKEN"
 
-bot = nextcord.Client()
-bot = commands.Bot(command_prefix="!")
+intents = nextcord.Intents().all()
 
-startup_extensions = ["test", "help", "error_handler", "colour", "covid", "crypto_info", "Fun", "api_images", "api_games", "Server_commands", "currency"]      
+bot = commands.Bot(command_prefix="!", intents=intents)
+
+startup_extensions = []
 
 @bot.event
 async def on_ready():
@@ -22,7 +31,6 @@ async def ping(ctx):
     )
     await ctx.send(embed=embed2)
     print("printed ping command")
-
 
 @bot.command(description="Only for owner")
 @commands.is_owner()
@@ -51,24 +59,14 @@ async def unload(ctx, extension):
 
 
 @bot.command()
-async def invite(ctx):
-    message = "YOUR OWN INVITE LINK"
-    embed = nextcord.Embed(
-        title="Invite link",
-        description=message,
-        colour = ctx.author.color
-    )
-    await ctx.send(embed=embed)
-
-
-@bot.command()
 @commands.is_owner()
 async def extensions(ctx):
-    emb = nextcord.Embed(
-        title="list of active extensions",
-        colour=nextcord.Colour.blurple()
-    )
-    await ctx.send(bot.extensions)
+    await ctx.send(f"{bot.extensions} \n")
+
+
+for file in os.listdir("./DC_BOT/modules"):
+        if file.endswith(".py"):
+            startup_extensions.append(f"modules.{file[:-3]}")
 
 if __name__ == "__main__":
     for extensions in startup_extensions:
