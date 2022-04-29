@@ -1,6 +1,8 @@
 ## Discord bot
 
-![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Medochikita/Discord-bot?include_prereleases&style=for-the-badge) ![GitHub Release Date](https://img.shields.io/github/release-date/Medochikita/Discord-bot?style=for-the-badge) ![GitHub last commit](https://img.shields.io/github/last-commit/Medochikita/Discord-bot?style=for-the-badge)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Medochikita/Discord-bot?include_prereleases&style=for-the-badge) 
+[![GitHub](https://img.shields.io/github/license/Medochikita/Discord-bot?style=for-the-badge)](LICENCE)
+![GitHub Release Date](https://img.shields.io/github/release-date/Medochikita/Discord-bot?style=for-the-badge) ![GitHub last commit](https://img.shields.io/github/last-commit/Medochikita/Discord-bot?style=for-the-badge)
 <br>
 <br>
 
@@ -17,3 +19,5 @@
 - Prefix is fixed: ! (Working on that)
 
 - [Invite link](https://discord.com/api/oauth2/authorize?client_id=842061459155320873&permissions=1643898207444&scope=bot%20applications.commands)
+
+- Licenced under the [MIT licence](LICENCE)
