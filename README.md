@@ -1,7 +1,7 @@
 ## Discord bot
 
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Medochikita/Discord-bot?include_prereleases&style=for-the-badge) 
-[![GitHub](https://img.shields.io/github/license/Medochikita/Discord-bot?style=for-the-badge)](LICENCE)
+[![GitHub](https://img.shields.io/github/license/Medochikita/Discord-bot?style=for-the-badge)](https://github.com/Medochikita/Discord-bot/blob/main/LICENSE)
 ![GitHub Release Date](https://img.shields.io/github/release-date/Medochikita/Discord-bot?style=for-the-badge) ![GitHub last commit](https://img.shields.io/github/last-commit/Medochikita/Discord-bot?style=for-the-badge)
 <br>
 <br>
@@ -20,4 +20,4 @@
 
 - [Invite link](https://discord.com/api/oauth2/authorize?client_id=842061459155320873&permissions=1643898207444&scope=bot%20applications.commands)
 
-- Licenced under the [MIT licence](LICENCE)
+- Licenced under the [MIT licence](https://github.com/Medochikita/Discord-bot/blob/main/LICENSE)
