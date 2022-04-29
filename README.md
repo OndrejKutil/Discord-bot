@@ -20,4 +20,4 @@
 
 - [Invite link](https://discord.com/api/oauth2/authorize?client_id=842061459155320873&permissions=1643898207444&scope=bot%20applications.commands)
 
-- Licenced under the [MIT licence](https://github.com/Medochikita/Discord-bot/blob/main/LICENSE)
+- Licenced under the [MIT licence](LICENCE.md)
