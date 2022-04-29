@@ -1,7 +1,19 @@
-# Discord-bot
-- My hobby project on creating a simple discord bot for me and my friends
-- uses nextcord liblary with some other typical python liblaries
-- It has some functions as:
-- coinflip, help command, getting color and its values from rgb, various uses of APIs for games
+## Discord bot
 
-- [Link for invite](https://discord.com/api/oauth2/authorize?client_id=842061459155320873&permissions=8&scope=bot%20applications.commands)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Medochikita/Discord-bot?include_prereleases&style=for-the-badge) ![GitHub Release Date](https://img.shields.io/github/release-date/Medochikita/Discord-bot?style=for-the-badge) ![GitHub last commit](https://img.shields.io/github/last-commit/Medochikita/Discord-bot?style=for-the-badge)
+<br>
+<br>
+
+- Discord bot build with nextcord framework <br>
+![Nextcord](https://badgen.net/badge/icon/Nextcord?icon=https://nextcord.dev/icon.svg&label&scale=1.5&style=for-the-badge)
+
+- Bot is hosted on Rasperry pi 4 4GB <br>
+![Raspberry Pi](https://img.shields.io/badge/-RaspberryPi-C51A4A?style=for-the-badge&logo=Raspberry-Pi)
+
+- Features normal command as well as slash commands
+
+- Commands for games, fun, science and much more
+
+- Prefix is fixed: !
+
+- [Invite link](https://discord.com/api/oauth2/authorize?client_id=842061459155320873&permissions=1643898207444&scope=bot%20applications.commands)
