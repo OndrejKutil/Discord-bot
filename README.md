@@ -1,5 +1,7 @@
 ## Discord bot
 
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Medochikita/Discord-bot?include_prereleases&style=for-the-badge)
+
 - Discord bot build with nextcord framework
 
 - Bot is hosted on Rasperry pi 4 4GB ![Raspberry Pi](https://img.shields.io/badge/-RaspberryPi-C51A4A?style=for-the-badge&logo=Raspberry-Pi)
