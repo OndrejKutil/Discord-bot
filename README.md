@@ -14,6 +14,6 @@
 
 - Commands for games, fun, science and much more
 
-- Prefix is fixed: !
+- Prefix is fixed: ! (Working on that)
 
 - [Invite link](https://discord.com/api/oauth2/authorize?client_id=842061459155320873&permissions=1643898207444&scope=bot%20applications.commands)
