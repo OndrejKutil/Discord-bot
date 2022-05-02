@@ -57,8 +57,8 @@ class Fun(commands.Cog):
         querystring = {"term":f"{word}"}
 
         headers = {
-            'x-rapidapi-host': f"{passwords.x-rapidapi-host_urban}",
-            'x-rapidapi-key': f"{passwords.x-rapidapi-key_urban}"
+            'x-rapidapi-host': f"{passwords.x_rapidapi_host_urban}",
+            'x-rapidapi-key': f"{passwords.x_rapidapi_key_urban}"
             }
 
         data = requests.get(url=url, headers=headers, params=querystring).json()
