@@ -125,8 +125,8 @@ class Games(commands.Cog):
         )
         url_epic = "https://free-epic-games.p.rapidapi.com/free"
         headers_epic = {
-            'x-rapidapi-host': f"{passwords.x-rapidapi-host_epic}"
-            'x-rapidapi-key': f"{passwords.x-rapidapi-key_epic}"
+            'x-rapidapi-host': f"{passwords.x_rapidapi_host_epic}"
+            'x-rapidapi-key': f"{passwords.x_rapidapi_key_epic}"
         }
 
         response_epic = requests.request("GET", url_epic, headers=headers_epic)
