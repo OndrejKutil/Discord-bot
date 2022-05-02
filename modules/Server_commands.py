@@ -18,7 +18,6 @@ class Server_comm(commands.Cog):
         serverinfoEmbed.add_field(name="Bots", value=", ".join(list_of_bots), inline=False)
 
         await ctx.send(embed=serverinfoEmbed)
-        print("Command -- Server_commands.py -- serverinfo")
 
 
     @commands.command(description="Voting message")
@@ -30,12 +29,7 @@ class Server_comm(commands.Cog):
         )
         msg = await ctx.send(embed=emb)
         await msg.add_reaction("👍")
-        await msg.add_reaction("👎")
-        print("Command -- Server_commands.py -- poll")
-
-    
-
-        
+        await msg.add_reaction("👎")       
 
 
 def setup(bot):

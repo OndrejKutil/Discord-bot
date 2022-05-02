@@ -17,16 +17,16 @@ class Fun(commands.Cog):
         first : str = SlashOption(description="First argument", required=True),
         second : str = SlashOption(description="Second argument", required=True)
         ):
-        embed14 = nextcord.Embed(
+        embed = nextcord.Embed(
             title = "Coin flip",
             colour = nextcord.Colour.blurple()
         )
         result_list = [first, second]
         result = random.choice(result_list)
 
-        embed14.set_thumbnail(url="https://i.pinimg.com/originals/d7/49/06/d74906d39a1964e7d07555e7601b06ad.gif")
-        embed14.add_field(name="Flip result", value=result)
-        await interaction.response.send_message(embed=embed14)
+        embed.set_thumbnail(url="https://i.pinimg.com/originals/d7/49/06/d74906d39a1964e7d07555e7601b06ad.gif")
+        embed.add_field(name="Flip result", value=result)
+        await interaction.response.send_message(embed=embed)
 
     
     @commands.command(description="sends users avatar")
@@ -79,7 +79,6 @@ class Fun(commands.Cog):
 
         await ctx.send(embed=emb)
 
-   
 
 def setup(bot):
     bot.add_cog(Fun(bot))

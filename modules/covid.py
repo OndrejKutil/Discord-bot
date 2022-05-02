@@ -24,7 +24,7 @@ class Covid(commands.Cog):
         emb.set_thumbnail(url=url)
 
         await interaction.response.send_message(embed=emb)
-        print("Command -- covid.py -- covid")
+        
         
 def setup(bot):
     bot.add_cog(Covid(bot))

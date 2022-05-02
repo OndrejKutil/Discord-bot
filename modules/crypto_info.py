@@ -42,11 +42,6 @@ class Crypto_info(commands.Cog):
         emb.add_field(name="% change in last 24 hours", value=percent_change_24hour)
         
         await ctx.send(embed=emb)
-        print("Command -- crypto_info.py -- crypto")
-
-
-
-
 
 
 def setup(bot):

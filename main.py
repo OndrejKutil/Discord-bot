@@ -27,7 +27,7 @@ async def ping(ctx):
         colour=nextcord.Colour.green(),
     )
     await ctx.send(embed=embed2)
-    print("printed ping command")
+    
 
 @bot.command(description="Only for owner")
 @commands.is_owner()

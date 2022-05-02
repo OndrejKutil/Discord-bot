@@ -98,7 +98,6 @@ class DropdownView(nextcord.ui.View):
         self.add_item(Dropdown())
 
 
-
 class Games(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -114,12 +113,11 @@ class Games(commands.Cog):
         view = DropdownView()
 
         await interaction.response.send_message(embed=emb, view=view)
-        print("Command -- api_games.py -- apex_map")
-  
+        
     
     @commands.command(description="Sends currently free games on epic")
     async def epic_free(self, ctx):
-        embed11 = nextcord.Embed(
+        embed = nextcord.Embed(
             title = "Free epic games this week",
             colour = nextcord.Colour.red()
         )
@@ -138,16 +136,15 @@ class Games(commands.Cog):
             titles_epic.append(i_epic["title"])
 
         for i in titles_epic:        
-            embed11.add_field(name=f"free game", value=i)
+            embed.add_field(name=f"free game", value=i)
             
 
-        await ctx.send(embed=embed11)
-        print("Command -- api_games.py -- epic_free")
+        await ctx.send(embed=embed)
   
 
     @commands.command(description="Sends apex stats for given player")
     async def apex_stats(self, ctx, player_name):
-        embed12 = nextcord.Embed(
+        embed = nextcord.Embed(
             title = "Apex player stats",
             colour = nextcord.Colour.red()
         )
@@ -167,19 +164,18 @@ class Games(commands.Cog):
         else:
             apex_ban = "Banned"
         
-        embed12.add_field(name="Player name", value=apex_name, inline=False)
-        embed12.set_image(url=str(apex_avatar))
-        embed12.add_field(name="Player level", value=apex_level, inline=True)
-        embed12.add_field(name="Player rank", value=apex_rank, inline=True)
-        embed12.add_field(name="Banned", value=apex_ban, inline=False)
+        embed.add_field(name="Player name", value=apex_name, inline=False)
+        embed.set_image(url=str(apex_avatar))
+        embed.add_field(name="Player level", value=apex_level, inline=True)
+        embed.add_field(name="Player rank", value=apex_rank, inline=True)
+        embed.add_field(name="Banned", value=apex_ban, inline=False)
 
-        await ctx.send(embed=embed12)
-        print("Command -- api_games.py -- apex_stats")
+        await ctx.send(embed=embed)
    
 
     @commands.command(description="Sends stats for given summoner")
     async def riot_stats(self, ctx, summoner_name):
-        embed13 = nextcord.Embed(
+        embed = nextcord.Embed(
             title = "Summoner stats",
             colour = nextcord.Colour.orange()
         )
@@ -198,27 +194,26 @@ class Games(commands.Cog):
 
         print(riot_stats_json_2)
         if riot_stats_json_2 == []:
-            embed13.add_field(name="Summoner name", value=riot_name, inline=False)
-            embed13.add_field(name="Summoner level", value=riot_level, inline=False)
-            embed13.add_field(name="Ranked type", value="Ranked 5v5", inline=False)
-            embed13.add_field(name="Rank", value=f"not ranked")
+            embed.add_field(name="Summoner name", value=riot_name, inline=False)
+            embed.add_field(name="Summoner level", value=riot_level, inline=False)
+            embed.add_field(name="Ranked type", value="Ranked 5v5", inline=False)
+            embed.add_field(name="Rank", value=f"not ranked")
         else:
             riot_type = riot_stats_json_2[0]["queueType"]
             riot_tier = riot_stats_json_2[0]["tier"]
             riot_rank = riot_stats_json_2[0]["rank"]
 
-            embed13.add_field(name="Summoner name", value=riot_name, inline=False)
-            embed13.add_field(name="Summoner level", value=riot_level, inline=False)
-            embed13.add_field(name="Ranked type", value=riot_type, inline=False)
-            embed13.add_field(name="Rank", value=f"{riot_tier} {riot_rank}")
+            embed.add_field(name="Summoner name", value=riot_name, inline=False)
+            embed.add_field(name="Summoner level", value=riot_level, inline=False)
+            embed.add_field(name="Ranked type", value=riot_type, inline=False)
+            embed.add_field(name="Rank", value=f"{riot_tier} {riot_rank}")
 
-        await ctx.send(embed=embed13)
-        print("Command -- api_games.py -- riot_stats")
+        await ctx.send(embed=embed)
   
 
     @commands.command(description="Sends current apex servers status")
     async def apex_status(self, ctx):
-        embed456 = nextcord.Embed(
+        embed = nextcord.Embed(
             title = "Apex server status",
             colour = nextcord.Colour.red()
         )
@@ -231,15 +226,10 @@ class Games(commands.Cog):
         eue_s = status_json["ApexOauth_Crossplay"]["EU-East"]["Status"]
         eue_r = status_json["ApexOauth_Crossplay"]["EU-East"]["ResponseTime"]
     
-        embed456.add_field(name="EU-West", value=f"Status: {euw_s}\n Ping: {euw_r}ms")
-        embed456.add_field(name="EU-East", value=f"Status: {eue_s}\n Ping: {eue_r}ms")
+        embed.add_field(name="EU-West", value=f"Status: {euw_s}\n Ping: {euw_r}ms")
+        embed.add_field(name="EU-East", value=f"Status: {eue_s}\n Ping: {eue_r}ms")
 
-        await ctx.send(embed=embed456)
-        print("Command -- api_games.py -- apex_status")
-  
-
-
-
+        await ctx.send(embed=embed)
 
 
 def setup(bot):

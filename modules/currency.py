@@ -23,14 +23,6 @@ class Currencies(commands.Cog):
         embed.add_field(name="Date", value=date, inline=False)
         embed.add_field(name=f"Value of {value} {original_cur} in {cur}", value=f"{float(val * value)} {cur}", inline=False)
         await ctx.send(embed=embed)
-        print("Command -- currency.py -- money")
-
-
-
-
-
-
-
 
 
 def setup(bot):

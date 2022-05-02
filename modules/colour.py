@@ -41,7 +41,6 @@ class Colour(commands.Cog):
         emb.add_field(name="CMYK", value=f"{cmyk}")
         emb.add_field(name="XYZ", value=f"{xyz}")
 
-
         await interaction.response.send_message(embed=emb)
 
 
