@@ -2,6 +2,7 @@ import nextcord
 from nextcord.ext import commands
 import os
 import logging
+import passwords
 
 logger = logging.getLogger('nextcord')
 logger.setLevel(logging.INFO)
@@ -9,13 +10,9 @@ handler = logging.FileHandler(filename='./nextcord.log', encoding='utf-8', mode=
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-token = "YOUR OWN TOKEN"
-
 intents = nextcord.Intents().all()
 
 bot = commands.Bot(command_prefix="!", intents=intents)
-
-startup_extensions = []
 
 @bot.event
 async def on_ready():
@@ -63,8 +60,9 @@ async def unload(ctx, extension):
 async def extensions(ctx):
     await ctx.send(f"{bot.extensions} \n")
 
+startup_extensions = []
 
-for file in os.listdir("./DC_BOT/modules"):
+for file in os.listdir("./modules"):
         if file.endswith(".py"):
             startup_extensions.append(f"modules.{file[:-3]}")
 
@@ -76,4 +74,4 @@ if __name__ == "__main__":
             exc = "{}: {}".format(type(e).__name__, e)
             print("Failed to load extensions {}\n{}".format(extensions, exc))
 
-    bot.run(token)
+    bot.run(passwords.token)
