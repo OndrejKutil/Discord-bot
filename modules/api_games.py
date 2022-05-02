@@ -3,11 +3,10 @@ import nextcord
 from nextcord.ext import commands
 import requests
 import datetime
+import passwords
 
 class Dropdown(nextcord.ui.Select):
     def __init__(self):
-
-        self.apex_key = "KEY"
 
         options = [
 
@@ -20,7 +19,7 @@ class Dropdown(nextcord.ui.Select):
 
     async def callback(self, interaction: nextcord.Interaction):
 
-        maprot_response = requests.get(f"https://api.mozambiquehe.re/maprotation?version=2&auth={self.apex_key}")
+        maprot_response = requests.get(f"https://api.mozambiquehe.re/maprotation?version=2&auth={passwords.apex_key}")
         print(maprot_response)
         maprot_json = maprot_response.json()
         
@@ -103,8 +102,6 @@ class DropdownView(nextcord.ui.View):
 class Games(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.api_key_epic = "KEY"
-        self.riot_key = "KEY"
 
     @nextcord.slash_command(description='Gets current Apex legends map rotation')
     async def apex_map(self, interaction : Interaction):
@@ -128,8 +125,8 @@ class Games(commands.Cog):
         )
         url_epic = "https://free-epic-games.p.rapidapi.com/free"
         headers_epic = {
-            'x-rapidapi-host': "HOST",
-            'x-rapidapi-key': f"{self.api_key_epic}"
+            'x-rapidapi-host': f"{passwords.x-rapidapi-host}"
+            'x-rapidapi-key': f"{passwords.x-rapidapi-key}"
         }
 
         response_epic = requests.request("GET", url_epic, headers=headers_epic)
@@ -155,7 +152,7 @@ class Games(commands.Cog):
             colour = nextcord.Colour.red()
         )
 
-        apex_stats_response = requests.get(f"https://api.mozambiquehe.re/bridge?version=5&platform=PC&player={player_name}&auth={self.apex_key}")
+        apex_stats_response = requests.get(f"https://api.mozambiquehe.re/bridge?version=5&platform=PC&player={player_name}&auth={passwords.apex_key}")
         print(apex_stats_response)
         apex_stats_json = apex_stats_response.json()
 
@@ -187,7 +184,7 @@ class Games(commands.Cog):
             colour = nextcord.Colour.orange()
         )
 
-        riot_stats_response = requests.get(f"https://eun1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summoner_name}?api_key={self.riot_key}")
+        riot_stats_response = requests.get(f"https://eun1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summoner_name}?api_key={passwords.riot_key}")
         print(riot_stats_response)
         riot_stats_json = riot_stats_response.json()
 
@@ -225,7 +222,7 @@ class Games(commands.Cog):
             title = "Apex server status",
             colour = nextcord.Colour.red()
         )
-        status_response = requests.get(f"https://api.mozambiquehe.re/servers?auth={self.apex_key}")
+        status_response = requests.get(f"https://api.mozambiquehe.re/servers?auth={passwords.apex_key}")
         print(status_response)
         status_json = status_response.json()
 
