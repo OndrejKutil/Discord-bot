@@ -12,11 +12,10 @@ logger.addHandler(handler)
 
 intents = nextcord.Intents().all()
 
-bot = commands.Bot(command_prefix="!", intents=intents)
+bot = commands.Bot(command_prefix="!", intents=intents, activity=nextcord.Activity(name="!Help", type=3), status=nextcord.Status.online)
 
 @bot.event
 async def on_ready():
-    await bot.change_presence(status=nextcord.Status.online, activity=nextcord.Game("!help"))
     print(f"logged with token and ready!")
 
 
@@ -27,7 +26,7 @@ async def ping(ctx):
         colour=nextcord.Colour.green(),
     )
     await ctx.send(embed=embed2)
-    
+
 
 @bot.command(description="Only for owner")
 @commands.is_owner()
@@ -59,6 +58,34 @@ async def unload(ctx, extension):
 @commands.is_owner()
 async def extensions(ctx):
     await ctx.send(f"{bot.extensions} \n")
+
+
+@bot.command()
+@commands.is_owner()
+async def chpr(ctx, type : int, text : str = None, type_type : int = None):
+    if type == 0 and text == None and type_type == None:
+        await bot.change_presence(status=nextcord.Status.online, activity=nextcord.Activity(name="!Help", type=3))
+    if type == 0 and text == None and type_type != None:
+        await bot.change_presence(status=nextcord.Status.online, activity=nextcord.Activity(name="!Help", type=type_type))
+    elif type == 0 and text != None and type_type == None:
+        await bot.change_presence(status=nextcord.Status.online, activity=nextcord.Activity(name=f"{text}", type=3))
+    elif type == 0 and text != None and type_type != None:
+        await bot.change_presence(status=nextcord.Status.online, activity=nextcord.Activity(name=f"{text}", type=type_type))
+    elif type == 1 and text == None:
+        await bot.change_presence(status=nextcord.Status.idle, activity=nextcord.Activity(name="Working on bot", type=0))
+    elif type == 1 and text != None:
+        await bot.change_presence(status=nextcord.Status.idle, activity=nextcord.Activity(name=f"{text}", type=0))
+    elif type == 2 and text == None:
+        await bot.change_presence(status=nextcord.Status.dnd, activity=nextcord.Activity(name="Maintenance", type=0))
+    elif type == 2 and text != None:
+        await bot.change_presence(status=nextcord.Status.dnd, activity=nextcord.Activity(name=f"{text}", type=0))
+    elif type == 3:
+        await bot.change_presence(status=nextcord.Status.invisible)
+    elif type == 4:
+        await bot.change_presence(status=nextcord.Status.offline)
+
+    await ctx.send(f"Changed presence to [{type} - with text ({text}) - and type {type_type}]")
+
 
 startup_extensions = []
 
