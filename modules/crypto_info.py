@@ -2,8 +2,7 @@ import nextcord
 from nextcord.ext import commands
 import requests
 from functions.get_czk import cur_conversion
-
-api_key = "KEY"
+import passwords
 
 class Crypto_info(commands.Cog):
     def __init__(self, bot):
@@ -19,7 +18,7 @@ class Crypto_info(commands.Cog):
         #x-messari-api-key
         url = f"https://data.messari.io/api/v1/assets/{crypto}/metrics"
         headers = {
-            "x-messari-api-key": f"{api_key}"
+            "x-messari-api-key": f"{passwords.crypto_api_key}"
         }
         response = requests.get(url=url, headers=headers)
         data = response.json()
