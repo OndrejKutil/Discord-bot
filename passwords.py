@@ -11,8 +11,8 @@ crypto_api_key = ""
 
 
 
-"""
-Just do from passwords import *
-and then passwords.token
-"""
+
+#Just do import passwords
+#and then passwords.token
+
 
