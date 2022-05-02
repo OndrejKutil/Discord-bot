@@ -1,9 +1,9 @@
 token = ""
 apex_key = ""
-x-rapidapi-host_urban = ""
-x-rapidapi-key_urban = ""
-x-rapidapi-host_epic = ""
-x-rapidapi-key_epic = ""
+x_rapidapi_host_urban = ""
+x_rapidapi_key_urban = ""
+x_rapidapi_host_epic = ""
+x_rapidapi_key_epic = ""
 riot_key = ""
 crypto_api_key = ""
 
