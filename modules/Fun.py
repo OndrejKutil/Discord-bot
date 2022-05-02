@@ -26,7 +26,6 @@ class Fun(commands.Cog):
         embed14.set_thumbnail(url="https://i.pinimg.com/originals/d7/49/06/d74906d39a1964e7d07555e7601b06ad.gif")
         embed14.add_field(name="Flip result", value=result)
         await interaction.response.send_message(embed=embed14)
-        print("Command -- Fun.py -- coinflip")
 
     
     @commands.command(description="sends users avatar")
@@ -39,8 +38,6 @@ class Fun(commands.Cog):
         embed.set_image(url=user.avatar.url)
         embed.set_footer(text=f"{user}s avatar")
         await ctx.send(embed=embed)
-        print("Command -- Fun.py -- avatar")
-
 
 
     @commands.command(description="Sends dm to tagged user")
@@ -50,7 +47,6 @@ class Fun(commands.Cog):
         
         final = f"[{message}] from {from_user}"
         await user.send(final)
-        print("Command -- Fun.py -- dm")
 
 
     @commands.command()
@@ -60,8 +56,8 @@ class Fun(commands.Cog):
         querystring = {"term":f"{word}"}
 
         headers = {
-            'x-rapidapi-host': "HOST",
-            'x-rapidapi-key': "KEY"
+            'x-rapidapi-host': f"{passwords.x-rapidapi-host}",
+            'x-rapidapi-key': f"{passwords.x-rapidapi-key}"
             }
 
         data = requests.get(url=url, headers=headers, params=querystring).json()
@@ -81,7 +77,6 @@ class Fun(commands.Cog):
         emb.set_footer(text=link)
 
         await ctx.send(embed=emb)
-        print(f"Command -- Fun.py -- urban -- {word0}")
 
    
 
