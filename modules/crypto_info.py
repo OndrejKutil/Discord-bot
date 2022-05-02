@@ -4,7 +4,7 @@ import requests
 from functions.get_czk import cur_conversion
 import passwords
 
-class Crypto_info(commands.Cog):
+class Crypto(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -47,4 +47,4 @@ class Crypto_info(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(Crypto_info(bot))
+    bot.add_cog(Crypto(bot))

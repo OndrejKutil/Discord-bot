@@ -1,7 +1,7 @@
 import nextcord
 from nextcord.ext import commands
 
-class Server_comm(commands.Cog):
+class Moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -33,4 +33,4 @@ class Server_comm(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(Server_comm(bot))
+    bot.add_cog(Moderation(bot))

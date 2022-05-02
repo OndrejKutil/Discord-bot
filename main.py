@@ -18,6 +18,10 @@ bot = commands.Bot(command_prefix="!", intents=intents, activity=nextcord.Activi
 @bot.event
 async def on_ready():
     print(f"logged with token and ready!")
+    print(bot.user.name)
+    print(bot.user.id)
+    print(nextcord.__version__)
+    print('------')
 
 
 @bot.command(name="ping", description="Command for checking ping")
@@ -64,6 +68,16 @@ async def extensions(ctx):
     # Sends a message to the channel the command was used in, with the list of extensions
 
     await ctx.send(f"{bot.extensions} \n")
+
+
+@bot.command()
+@commands.is_owner()
+async def servers(ctx):
+    servers = []
+    for guild in bot.guilds:
+        servers.append(guild)
+
+    await ctx.send(servers)
 
 
 @bot.command()
