@@ -9,13 +9,24 @@ class Currencies(commands.Cog):
 
     @commands.command(description="")
     async def money(self, ctx, value: float, original_cur: str, cur: str):
+        
+        '''        
+        Parameters
+        ----------
+        value : float
+            float - The value of the currency you want to convert
+        original_cur : str
+            The original currency
+        cur : str
+            The currency you want to convert to
+        '''
+
         embed = nextcord.Embed(
             title = "Currency conversion",
             colour = nextcord.Colour.blurple()
         )
 
         money_response = requests.get(f"https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/{original_cur}/{cur}.json")
-        print(money_response)
         money_json = money_response.json()
         val = money_json[f"{cur}"]
         date = money_json["date"]

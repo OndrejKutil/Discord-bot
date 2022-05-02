@@ -1,5 +1,6 @@
 import requests
 
+# Converts money from one currency to another
 class cur_conversion():
     def get_czk_rom_usd(value: str):
         money_response = requests.get(f"https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/usd/czk.json")

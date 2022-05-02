@@ -10,12 +10,14 @@ class Crypto_info(commands.Cog):
 
     @commands.command(description="")
     async def crypto(self, ctx, crypto: str):
+        
+        # It takes a crypto currency name as an argument, gets the data from the API, and then sends it to the user in a discord embed
+
         emb = nextcord.Embed(
             title= "Crypto info",
             colour= ctx.author.colour
         )
 
-        #x-messari-api-key
         url = f"https://data.messari.io/api/v1/assets/{crypto}/metrics"
         headers = {
             "x-messari-api-key": f"{passwords.crypto_api_key}"

@@ -1,6 +1,5 @@
 import nextcord
 from nextcord.ext import commands
-from nextcord import Interaction, SlashOption
 import requests
 
 class Colour(commands.Cog):
@@ -9,13 +8,16 @@ class Colour(commands.Cog):
 
     @nextcord.slash_command(description='Gets color from rgb values')
     async def color(
+        
         self, 
-        interaction : Interaction, 
-        red: int = SlashOption(description="Red", required=True),
-        green: int = SlashOption(description="Green", required=True),
-        blue: int = SlashOption(description="Blue", required=True)
+        interaction : nextcord.Interaction, 
+        red: int = nextcord.SlashOption(description="Red", required=True),
+        green: int = nextcord.SlashOption(description="Green", required=True),
+        blue: int = nextcord.SlashOption(description="Blue", required=True)
         ):
         
+        # It takes in 3 arguments, red, green, and blue, and then it sends a request to thecolorapi.com, and then it sends a message with the color information
+
         rgb = f"{red}, {green}, {blue}"
 
         url = f"https://www.thecolorapi.com/id?rgb={red},{green},{blue}&format=json"

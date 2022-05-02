@@ -4,6 +4,15 @@ import csv
 
 def get_data():
     
+    '''
+    It downloads a CSV file from a website, reads it, and returns the values of the variables I need
+    
+    Returns
+    -------
+        Date, Last_day_inf, In_hospitals, ActiveCovidCases, Tests
+    
+    '''
+    
     url = "https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/zakladni-prehled.csv"
     with requests.Session() as s:
         download = s.get(url)
@@ -12,13 +21,12 @@ def get_data():
         cr = csv.reader(decoded_content.splitlines(), delimiter=",")
         my_list = list(cr)
         
-        text = my_list[0]
         numbers = my_list[1]
         
-        datum = str(datetime.date.today())     
-        nakazeni_vcera = numbers[8]
-        hospitalizovani = numbers[6]
-        aktivni_covid = numbers[3]
-        testy = numbers[7]
+        Date = str(datetime.date.today())     
+        Last_day_inf = numbers[8]
+        In_hospitals = numbers[6]
+        ActiveCovidCases = numbers[3]
+        Tests = numbers[7]
 
-        return datum, nakazeni_vcera, hospitalizovani, aktivni_covid, testy
+        return Date, Last_day_inf, In_hospitals, ActiveCovidCases, Tests

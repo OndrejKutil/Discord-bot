@@ -1,4 +1,3 @@
-from nextcord import Interaction, SlashOption
 import nextcord
 from nextcord.ext import commands
 import random
@@ -12,10 +11,11 @@ class Fun(commands.Cog):
 
     @nextcord.slash_command(description="random choice from two arguments")
     async def coinflip(
+        
         self,
-        interaction : Interaction, 
-        first : str = SlashOption(description="First argument", required=True),
-        second : str = SlashOption(description="Second argument", required=True)
+        interaction : nextcord.Interaction, 
+        first : str = nextcord.SlashOption(description="First argument", required=True),
+        second : str = nextcord.SlashOption(description="Second argument", required=True)
         ):
         embed = nextcord.Embed(
             title = "Coin flip",
@@ -31,6 +31,9 @@ class Fun(commands.Cog):
     
     @commands.command(description="sends users avatar")
     async def avatar(self, ctx, user: nextcord.Member=None):
+        
+        # It sends the avatar of the user you mention or if you don't mention anyone it sends your avatar
+        
         if not user:
             user = ctx.message.author
         embed = nextcord.Embed(

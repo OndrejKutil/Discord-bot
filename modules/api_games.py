@@ -1,4 +1,3 @@
-from nextcord import Interaction
 import nextcord
 from nextcord.ext import commands
 import requests
@@ -18,9 +17,10 @@ class Dropdown(nextcord.ui.Select):
         super().__init__(placeholder="Choose cathegory", min_values=1, max_values=1, options=options)
 
     async def callback(self, interaction: nextcord.Interaction):
-
+        
+        #It gets the current map rotation from the API and displays it in an embed.
+        
         maprot_response = requests.get(f"https://api.mozambiquehe.re/maprotation?version=2&auth={passwords.apex_key}")
-        print(maprot_response)
         maprot_json = maprot_response.json()
         
         #Arenas
@@ -103,7 +103,7 @@ class Games(commands.Cog):
         self.bot = bot
 
     @nextcord.slash_command(description='Gets current Apex legends map rotation')
-    async def apex_map(self, interaction : Interaction):
+    async def apex_map(self, interaction : nextcord.Interaction):
         emb = nextcord.Embed(
             title="Apex map rotation",
             description="please select which game mode: ",
@@ -123,7 +123,7 @@ class Games(commands.Cog):
         )
         url_epic = "https://free-epic-games.p.rapidapi.com/free"
         headers_epic = {
-            'x-rapidapi-host': f"{passwords.x_rapidapi_host_epic}"
+            'x-rapidapi-host': f"{passwords.x_rapidapi_host_epic}",
             'x-rapidapi-key': f"{passwords.x_rapidapi_key_epic}"
         }
 
@@ -144,13 +144,15 @@ class Games(commands.Cog):
 
     @commands.command(description="Sends apex stats for given player")
     async def apex_stats(self, ctx, player_name):
+        
+        # It takes a player name, gets the player's stats from an API, and then sends an embed with the player's stats.
+        
         embed = nextcord.Embed(
             title = "Apex player stats",
             colour = nextcord.Colour.red()
         )
 
         apex_stats_response = requests.get(f"https://api.mozambiquehe.re/bridge?version=5&platform=PC&player={player_name}&auth={passwords.apex_key}")
-        print(apex_stats_response)
         apex_stats_json = apex_stats_response.json()
 
         apex_name = apex_stats_json["global"]["name"]
@@ -181,7 +183,6 @@ class Games(commands.Cog):
         )
 
         riot_stats_response = requests.get(f"https://eun1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summoner_name}?api_key={passwords.riot_key}")
-        print(riot_stats_response)
         riot_stats_json = riot_stats_response.json()
 
         riot_name = riot_stats_json["name"]
@@ -189,10 +190,8 @@ class Games(commands.Cog):
         user_id = riot_stats_json["id"]
 
         riot_stats_response_2 = requests.get(f"https://eun1.api.riotgames.com/lol/league/v4/entries/by-summoner/{user_id}?api_key={self.riot_key}")
-        print(riot_stats_response_2)
         riot_stats_json_2 = riot_stats_response_2.json()
 
-        print(riot_stats_json_2)
         if riot_stats_json_2 == []:
             embed.add_field(name="Summoner name", value=riot_name, inline=False)
             embed.add_field(name="Summoner level", value=riot_level, inline=False)
@@ -218,7 +217,6 @@ class Games(commands.Cog):
             colour = nextcord.Colour.red()
         )
         status_response = requests.get(f"https://api.mozambiquehe.re/servers?auth={passwords.apex_key}")
-        print(status_response)
         status_json = status_response.json()
 
         euw_s = status_json["ApexOauth_Crossplay"]["EU-West"]["Status"]
