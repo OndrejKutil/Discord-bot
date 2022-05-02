@@ -3,6 +3,7 @@ import nextcord
 from nextcord.ext import commands
 import random
 import requests
+import passwords
 
 
 class Fun(commands.Cog):
