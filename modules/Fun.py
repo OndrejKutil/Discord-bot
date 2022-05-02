@@ -1,4 +1,3 @@
-from unittest import result
 from nextcord import Interaction, SlashOption
 import nextcord
 from nextcord.ext import commands
