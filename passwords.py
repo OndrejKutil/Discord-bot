@@ -7,11 +7,6 @@ x_rapidapi_key_epic = ""
 riot_key = ""
 crypto_api_key = ""
 
-
-
-
-
-
 #Just do import passwords
 #and then passwords.token
 
