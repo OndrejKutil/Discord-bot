@@ -20,6 +20,7 @@
 
 | Slash commands | Explanation |
 | ----------- | ----------- |
+| /help | Sends help command |
 | /color <r> <g> <b> | From RGB values gets the color and shows it with a bunch of other stuff |
 | /apex_map | Sends current apex map rotation for all modes |
 | /coinflip <first> <second> | Randomly decides from the two arguments you provide |
@@ -31,7 +32,6 @@
 | ----------- | ----------- |
 | prefix <prefix> | Sets the prefix to the one u provided |
 | ping | Sends the bots current ping |
-| help | Sends help command |
 | crypto <crypto tag> | Sends info about crypto you provide |
 | money <value> <curr> <curr> | Sends conversion between two currencies you provide |
 | poll <message> | Creates a poll that users can vote on |
