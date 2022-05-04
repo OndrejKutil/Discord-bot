@@ -1,146 +1,143 @@
-from typing import List, Tuple
-
 import nextcord
-from nextcord.ext import commands, menus
+from nextcord.ext import commands
 
+class HelpDropdown(nextcord.ui.Select):
+    def __init__(self):
 
-class HelpPageSource(menus.ListPageSource):
-    """Page source for dividing the list of tuples into pages and displaying them in embeds"""
+        options = [
 
-    def __init__(self, help_command: "NewHelpCommand", data: List[Tuple[str, str]]):
-        self._help_command = help_command
-        # you can set here how many items to display per page
-        super().__init__(data, per_page=2)
+            nextcord.SelectOption(label="Home", description="home page for help command"),
+            nextcord.SelectOption(label="Server management", description="commands for managing your server"),
+            nextcord.SelectOption(label="Usefull commands", description="Some usefull commands"),
+            nextcord.SelectOption(label="Game commands", description="commands for info about games and players"),
+            nextcord.SelectOption(label="Crypto/Money commands", description="commands for info about money and crypto"),
+            nextcord.SelectOption(label="Fun commands", description="commands for fun"),
+            nextcord.SelectOption(label="Bot admin commands", description="commands for managing this bot")
 
-    async def format_page(self, menu: menus.ButtonMenuPages, entries: List[Tuple[str, str]]):
-        """
-        Returns an embed containing the entries for the current page
-        """
-        prefix = self._help_command.context.clean_prefix
-        invoked_with = self._help_command.invoked_with
-        # create embed
-        embed = nextcord.Embed(title="Bot Commands", colour=self._help_command.COLOUR)
-        embed.description = (
-            f'Use "{prefix}{invoked_with} command" for more info on a command.\n'
-            f'Use "{prefix}{invoked_with} category" for more info on a category.\n'
-            "\n"
-            f'Also dont forget to check out my slash commands.'
-        )
-        # add the entries to the embed
-        for entry in entries:
-            embed.add_field(name=entry[0], value=entry[1], inline=True)
-        # set the footer to display the page number
-        embed.set_footer(text=f'Page {menu.current_page + 1}/{self.get_max_pages()}')
-        return embed
+        ]
+        super().__init__(placeholder="Choose cathegory", min_values=1, max_values=1, options=options)
 
-
-class HelpButtonMenuPages(menus.ButtonMenuPages):
-    """Subclass of ButtonMenuPages to add an interaction_check"""
-
-    def __init__(self, ctx: commands.Context, **kwargs):
-        super().__init__(**kwargs)
-        self._ctx = ctx
-
-    async def interaction_check(self, interaction: nextcord.Interaction) -> bool:
-        """Ensure that the user of the button is the one who called the help command"""
-        return self._ctx.author == interaction.user
-
-
-class NewHelpCommand(commands.MinimalHelpCommand):
-    """Custom help command override using embeds and button pagination"""
-
-    # embed colour
-    COLOUR = nextcord.Colour.blurple()
-
-    def get_command_signature(self, command: commands.core.Command):
-        """Retrieves the signature portion of the help page."""
-        return f"{self.context.clean_prefix}{command.qualified_name} {command.signature}"
-
-    async def send_bot_help(self, mapping: dict):
-        """implements bot command help page"""
-        prefix = self.context.clean_prefix
-        invoked_with = self.invoked_with
-        embed = nextcord.Embed(title="Bot Commands", colour=self.COLOUR)
-        embed.description = (
-            f'Use "{prefix}{invoked_with} command" for more info on a command.\n'
-            f'Use "{prefix}{invoked_with} category" for more info on a category.'
-        )
-
-        # create a list of tuples for the page source
-        embed_fields = []
-        for cog, commands in mapping.items():
-            name = "No Category" if cog is None else cog.qualified_name
-            filtered = await self.filter_commands(commands, sort=True)
-            if filtered:
-                # \u2002 = en space
-                value = "\u2002".join(f"`{prefix}{c.name}`" for c in filtered)
-                if cog and cog.description:
-                    value = f"{cog.description}\n{value}"
-                # add (name, value) pair to the list of fields
-                embed_fields.append((name, value))
-
-        # create a pagination menu that paginates the fields
-        pages = HelpButtonMenuPages(
-            ctx=self.context,
-            source=HelpPageSource(self, embed_fields),
-            disable_buttons_after=True
-        )
-        await pages.start(self.context)
-
-    async def send_cog_help(self, cog: commands.Cog):
-        """implements cog help page"""
-        embed = nextcord.Embed(
-            title=f"{cog.qualified_name} Commands",
-            colour=self.COLOUR,
-        )
-        if cog.description:
-            embed.description = cog.description
-
-        filtered = await self.filter_commands(cog.get_commands(), sort=True)
-        for command in filtered:
-            embed.add_field(
-                name=self.get_command_signature(command),
-                value=command.short_doc or "...",
-                inline=False,
+    async def callback(self, interaction: nextcord.Interaction):
+        # Main embed
+        emb = nextcord.Embed(
+            title="Help command",
+            description="For more information info check https://github.com/Medochikita/Discord-bot",
+            color=nextcord.Color.blurple()
             )
-        embed.set_footer(
-            text=f"Use {self.context.clean_prefix}help [command] for more info on a command."
-        )
-        await self.get_destination().send(embed=embed)
 
-    async def send_group_help(self, group: commands.Group):
-        """implements group help page and command help page"""
-        embed = nextcord.Embed(title=group.qualified_name, colour=self.COLOUR)
-        if group.help:
-            embed.description = group.help
+        emb.add_field(name="Socials", value="Discord - Medochikita#0509\nGithub - https://github.com/Medochikita\nTikTok - https://www.tiktok.com/@ondrejkutil_", inline=False)
 
-        if isinstance(group, commands.Group):
-            filtered = await self.filter_commands(group.commands, sort=True)
-            for command in filtered:
-                embed.add_field(
-                    name=self.get_command_signature(command),
-                    value=command.short_doc or "...",
-                    inline=False,
-                )
+        # Server management embed
+        emb0 = nextcord.Embed(
+            title="Server mamagement",
+            description="Command for managing your server",
+            color=nextcord.Color.blurple()
+            )
 
-        await self.get_destination().send(embed=embed)
+        emb0.add_field(name="prefix <prefix>", value="Sets the prefix for your server", inline=False)
+        emb0.add_field(name="/coinflip", value="Randomly decides between two arguments", inline=False)
+        emb0.add_field(name="serverinfo", value="Sends information about the server", inline=False)
+        emb0.add_field(name="poll <message>", value="Creates a poll users can vote on", inline=False)
+        emb0.add_field(name="avatar <@user>", value="Sends tagged user or yours avatar", inline=False)
+        emb0.add_field(name="dm <@user> <message>", value="Sends message to tagged user", inline=False)
 
-    # Use the same function as group help for command help
-    send_command_help = send_group_help
+        # Games embed
+        emb1 = nextcord.Embed(
+            title="Commands for games",
+            description="commands for Apex legends, Riot games and more",
+            color=nextcord.Color.blurple()
+            )
+
+        emb1.add_field(name="/apex_map", value="Sends current Apex legends map rotation for all modes", inline=False)
+        emb1.add_field(name="apex_stats", value="Sends stats about player in Apex legends", inline=False)
+        emb1.add_field(name="apex_status", value="Sends current Apex legends servers status", inline=False)
+        emb1.add_field(name="lol_stats", value="Sends stats about League of legends player", inline=False)
+        emb1.add_field(name="epic_free", value="Sends current free games in Epic games store", inline=False)
+
+        # Money/Crypto embed
+        emb2 = nextcord.Embed(
+            title="Crypto/Money commands",
+            description="commands for info about money and crypto",
+            color=nextcord.Color.blurple()
+            )
+
+        emb2.add_field(name="crypto <crypto tag>", value="Sends information about crypto u provided", inline=False)
+        emb2.add_field(name="money <value> <curr> <curr>", value="Sends converts from the first to the second currency", inline=False)
+
+        # Fun embed
+        emb3 = nextcord.Embed(
+            title="Fun commands",
+            description="some commands for fun",
+            color=nextcord.Color.blurple()
+            )
+
+        emb3.add_field(name="urban <word>", value="Sends urban dictionary explanation of the word", inline=False)
+
+        # Bot admin commands
+        emb4 = nextcord.Embed(
+            title="Bot admin commands",
+            description="Commands for managing the bot",
+            color=nextcord.Color.blurple()
+            )
+
+        emb4.add_field(name="chpr", value="Changes bots presence and status", inline=False)
+        emb4.add_field(name="servers", value="Show in which servers the bot is", inline=False)
+        emb4.add_field(name="load", value="Loads an extension", inline=False)
+        emb4.add_field(name="unload", value="Unloads an extension", inline=False) 
+        emb4.add_field(name="extensions", value="Sends all active extensions", inline=False)
+
+        # Usefull commands embed
+        emb5 = nextcord.Embed(
+            title="usefull commands",
+            description="Some usefull commands",
+            color=nextcord.Color.blurple()
+            )
+
+        emb5.add_field(name="/covid", value="Sends info about COVID-19 cases for CZ", inline=False)
+        emb5.add_field(name="/color", value="From RGB values sends the color and other values", inline=False)
+
+        if self.values[0] == "Home":
+            return await interaction.response.edit_message(embed=emb)
+        elif self.values[0] == "Server management":
+            return await interaction.response.edit_message(embed=emb0)
+        elif self.values[0] == "Usefull commands":
+            return await interaction.response.edit_message(embed=emb5)
+        elif self.values[0] == "Game commands":
+            return await interaction.response.edit_message(embed=emb1)
+        elif self.values[0] == "Crypto/Money commands":
+            return await interaction.response.edit_message(embed=emb2)
+        elif self.values[0] == "Fun commands":
+            return await interaction.response.edit_message(embed=emb3)
+        elif self.values[0] == "Bot admin commands":
+            return await interaction.response.edit_message(embed=emb4)
 
 
-class HelpCog(commands.Cog, name="Help"):
-    
+class HelpView(nextcord.ui.View):
+    def __init__(self):
+        super().__init__()
 
-    def __init__(self, bot: commands.Bot):
-        self.__bot = bot
-        self.__original_help_command = bot.help_command
-        bot.help_command = NewHelpCommand()
-        bot.help_command.cog = self
-
-    def cog_unload(self):
-        self.__bot.help_command = self.__original_help_command
+        self.add_item(HelpDropdown())
 
 
-def setup(bot: commands.Bot):
-    bot.add_cog(HelpCog(bot))
+class Help(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+
+    @nextcord.slash_command()
+    async def help(self, interaction : nextcord.Interaction):
+
+        emb = nextcord.Embed(
+            title="Help command",
+            description="For more information info check https://github.com/Medochikita/Discord-bot",
+            color=nextcord.Color.blurple()
+            )
+
+        emb.add_field(name="Socials", value="Discord - Medochikita#0509\nGithub - https://github.com/Medochikita\nTikTok - https://www.tiktok.com/@ondrejkutil_", inline=False)
+
+        view = HelpView()
+
+        await interaction.response.send_message(embed=emb, view=view)
+
+
+def setup(bot):
+    bot.add_cog(Help(bot))
