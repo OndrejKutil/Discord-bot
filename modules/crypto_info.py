@@ -14,7 +14,7 @@ class Crypto(commands.Cog):
         # It takes a crypto currency name as an argument, gets the data from the API, and then sends it to the user in a discord embed
 
         emb = nextcord.Embed(
-            title= "Crypto info",
+            title= "**Crypto info 💰**",
             colour= ctx.author.colour
         )
 

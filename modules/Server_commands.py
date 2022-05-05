@@ -23,13 +23,13 @@ class Moderation(commands.Cog):
     @commands.command(description="Voting message")
     async def poll(self, ctx, *, message):
         emb = nextcord.Embed(
-            title= " HLASOVÁNÍ ",
+            title= " POLL ",
             description=f"{message}",
             colour=ctx.author.colour
         )
         msg = await ctx.send(embed=emb)
-        await msg.add_reaction("👍")
-        await msg.add_reaction("👎")       
+        await msg.add_reaction("✅")
+        await msg.add_reaction("❌")       
 
 
 def setup(bot):

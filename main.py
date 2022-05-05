@@ -55,16 +55,24 @@ async def on_guild_remove(guild):
 
 
 @bot.command()
-async def prefix(ctx, prefix):
-    with open("prefixes.json", "r") as f:
-        prefixes = json.load(f)
+async def prefix(ctx, prefix : str = None):
+    if prefix != None:
+        with open("prefixes.json", "r") as f:
+            prefixes = json.load(f)
 
-    prefixes[str(ctx.guild.id)] = prefix
+        prefixes[str(ctx.guild.id)] = prefix
 
-    with open("prefixes.json", "w") as f:
-        json.dump(prefixes, f, indent=4)
+        with open("prefixes.json", "w") as f:
+            json.dump(prefixes, f, indent=4)
 
-    await ctx.send(f"Changed prefix to '{prefix}'")
+        await ctx.send(f"✅ Changed prefix to **'{prefix}'**")
+    else:
+        with open("prefixes.json", "r") as f:
+            prefixes = json.load(f)
+
+        cur_prefix = prefixes[str(ctx.guild.id)]
+
+        await ctx.send(f"Current prefix is: **'{cur_prefix}'**")
 
 
 @bot.command(name="ping", description="Command for checking ping")
@@ -82,11 +90,11 @@ async def load(ctx, extension):
     try:
         bot.load_extension(extension)
         print(f"Succusfuelly loaded {extension} extension")
-        await ctx.send(f"loaded {extension} extensiom")
+        await ctx.send(f"**✅ loaded {extension} extension**")
     except Exception as e:
         exc = f"{type(e).__name__}: {e}"
         print(f"Failed to load extension {extensions}\n{exc}")
-        await ctx.send(f"failed to load {extension} extension")
+        await ctx.send(f"**❌ failed to load {extension} extension**")
 
 
 @bot.command(description="Only for owner")
@@ -95,17 +103,22 @@ async def unload(ctx, extension):
     try:
         bot.unload_extension(extension)
         print(f"Succusfuelly unloaded {extension} extension")
-        await ctx.send(f"unloaded {extension} extension")
+        await ctx.send(f"**✅ unloaded {extension} extension**")
     except Exception as e:
         exc = f"{type(e).__name__}: {e}"
         print(f"Failed to unload extension {extensions}\n{exc}")
-        await ctx.send(f"failed to unload {extension} extension")
+        await ctx.send(f"**❌ failed to unload {extension} extension**")
 
 
 @bot.command()
 @commands.is_owner()
 async def extensions(ctx):
-    await ctx.send(f"{bot.extensions} \n")
+    exten = ""
+    for ex in bot.extensions:
+        ex = ex[8:]
+        exten = exten + ex + "\n"
+    
+    await ctx.send(f"**{exten}**")
 
 
 @bot.command()
@@ -115,7 +128,7 @@ async def servers(ctx):
     for guild in bot.guilds:
         servers.append(guild)
 
-    await ctx.send(servers)
+    await ctx.send(f"**{servers}**")
 
 
 @bot.command()
@@ -152,7 +165,7 @@ async def chpr(ctx, type : int, text : str = None, type_type : int = None):
     elif type == 3:
         await bot.change_presence(status=nextcord.Status.invisible)
 
-    await ctx.send(f"Changed presence to [{type} - with text ({text}) - and type {type_type}]")
+    await ctx.send(f"✅ Changed presence to **{type} - with text ({text}) - and type {type_type}**")
 
 
 # Loading all the extensions in the modules folder.

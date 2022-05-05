@@ -22,7 +22,7 @@ class Currencies(commands.Cog):
         '''
 
         embed = nextcord.Embed(
-            title = "Currency conversion",
+            title = "**Currency conversion 💰**",
             colour = nextcord.Colour.blurple()
         )
 

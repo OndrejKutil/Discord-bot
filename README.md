@@ -31,6 +31,12 @@
 | Normal commands | Explanation |
 | ----------- | ----------- |
 | prefix <prefix> | Sets the prefix to the one u provided |
+| play <url / name> | Plays the song you request |
+| stop | Stops playing the song |
+| pause | Pauses currently playing song |
+| resume | Resumes currently paused song |
+| join | Joins a vc user is in |
+| leave | Leaves voice channel |
 | ping | Sends the bots current ping |
 | crypto <crypto tag> | Sends info about crypto you provide |
 | money <value> <curr> <curr> | Sends conversion between two currencies you provide |

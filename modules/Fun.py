@@ -49,7 +49,7 @@ class Fun(commands.Cog):
         message = message or "No message provided"
         from_user = ctx.author
         
-        final = f"[{message}] from {from_user}"
+        final = f"{message}\n**From {from_user}**"
         await user.send(final)
 
 

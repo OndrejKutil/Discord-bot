@@ -142,7 +142,7 @@ class Games(commands.Cog):
         await ctx.send(embed=embed)
   
 
-    @commands.command(description="Sends apex stats for given player")
+    @commands.command(description="Sends apex stats for given player", enabled=False)
     async def apex_stats(self, ctx, player_name):
         
         # It takes a player name, gets the player's stats from an API, and then sends an embed with the player's stats.
@@ -175,7 +175,7 @@ class Games(commands.Cog):
         await ctx.send(embed=embed)
    
 
-    @commands.command(description="Sends stats for given summoner")
+    @commands.command(description="Sends stats for given summoner", enabled=False)
     async def riot_stats(self, ctx, summoner_name):
         embed = nextcord.Embed(
             title = "Summoner stats",
@@ -210,7 +210,7 @@ class Games(commands.Cog):
         await ctx.send(embed=embed)
   
 
-    @commands.command(description="Sends current apex servers status")
+    @commands.command(description="Sends current apex servers status", enabled=False)
     async def apex_status(self, ctx):
         embed = nextcord.Embed(
             title = "Apex server status",
