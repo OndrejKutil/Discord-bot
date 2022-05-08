@@ -33,6 +33,16 @@ async def on_ready():
 
 
 @bot.event
+async def on_member_join(member):
+    guild = member.guild
+    if guild.system_channel is not None:
+        to_send = f'**👋 Welcome {member.mention} to {guild.name}!**'
+        await guild.system_channel.send(to_send)
+    else:
+        raise commands.CommandError("**No system channel**")
+
+
+@bot.event
 async def on_guild_join(guild):
     with open("prefixes.json", "r") as f:
         prefixes = json.load(f)
@@ -133,6 +143,12 @@ async def servers(ctx):
 
 @bot.command()
 @commands.is_owner()
+async def log(ctx):
+    await ctx.send(files=[nextcord.File('nextcord.log')])
+
+
+@bot.command()
+@commands.is_owner()
 async def chpr(ctx, type : int, text : str = None, type_type : int = None):
     '''
     It changes the bot's presence.
@@ -148,24 +164,28 @@ async def chpr(ctx, type : int, text : str = None, type_type : int = None):
     
     '''
     if type == 0:
+        type_text = "online"
         if text != None or type_type != None:
             await bot.change_presence(status=nextcord.Status.online, activity=nextcord.Activity(name=f"{text}", type=type_type))
         else:
             await bot.change_presence(status=nextcord.Status.online, activity=nextcord.Activity(name="/help", type=0))
     elif type == 1:
+        type_text = "idle"
         if text != None or type_type != None:
             await bot.change_presence(status=nextcord.Status.idle, activity=nextcord.Activity(name=f"{text}", type=type_type))
         else:
             await bot.change_presence(status=nextcord.Status.idle, activity=nextcord.Activity(name="updating...", type=0))
     elif type == 2:
+        type_text = "do not disturb"
         if text != None or type_type != None:
             await bot.change_presence(status=nextcord.Status.dnd, activity=nextcord.Activity(name=f"{text}", type=type_type))
         else:
             await bot.change_presence(status=nextcord.Status.dnd, activity=nextcord.Activity(name="Bot repair!", type=0))
     elif type == 3:
+        type_text = "invisible"
         await bot.change_presence(status=nextcord.Status.invisible)
 
-    await ctx.send(f"✅ Changed presence to **{type} - with text ({text}) - and type {type_type}**")
+    await ctx.send(f"✅ Changed presence to **{type_text} - with text ({text}) - and type {type_type}**")
 
 
 # Loading all the extensions in the modules folder.
