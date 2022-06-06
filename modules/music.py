@@ -62,10 +62,9 @@ class Music(commands.Cog):
 
         voice_channel = ctx.author.voice.channel
         if ctx.voice_client is None:
-            vc = await voice_channel.connect()
+            await voice_channel.connect()
         else:
             await ctx.voice_client.move_to(voice_channel)
-            vc = ctx.voice_client
 
 
     @commands.command(description="streams music")
@@ -75,7 +74,7 @@ class Music(commands.Cog):
             ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
         
         await ctx.reply('🎶 Now playing: **{}**'.format(player.title))
-
+    
     
     @commands.command(description="stops and disconnects the bot from voice")
     async def leave(self, ctx):
@@ -111,20 +110,27 @@ class Music(commands.Cog):
 
     @commands.command()
     async def volume(self, ctx, volume: int):
-        """Changes the player's volume"""
-
         if ctx.voice_client is None:
             return await ctx.reply("**❌ Not connected to a voice channel.**")
 
         ctx.voice_client.source.volume = volume / 100
-        await ctx.reply(f"**✅ Changed volume to {volume}%**")
+        await ctx.reply(f"**🔊 Changed volume to {volume}%**")
 
     
     @commands.command()
     async def stop(self, ctx):
-        """Stops and disconnects the bot from voice"""
+        await ctx.voice_client.stop()
 
-        await ctx.voice_client.disconnect()
+    
+    @commands.command()
+    async def playing(self, ctx):
+        if ctx.voice_client is None:
+            return await ctx.reply("**❌ Not connected to a voice channel.**")
+
+        if ctx.voice_client.is_playing():
+            await ctx.reply(f"**🎶 Now playing: {ctx.voice_client.source.title}**")
+        else:
+            await ctx.reply("**❌ There is no song currently playing.**")
 
 
     @play.before_invoke

@@ -21,7 +21,7 @@ def get_prefix(bot, message):
 
 intents = nextcord.Intents().all()
 
-bot = commands.Bot(command_prefix=get_prefix, intents=intents, activity=nextcord.Activity(name="/help", type=0), status=nextcord.Status.online)
+bot = commands.Bot(command_prefix=commands.when_mentioned_or(get_prefix), intents=intents, activity=nextcord.Activity(name="/help", type=0), status=nextcord.Status.online)
 
 @bot.event
 async def on_ready():
