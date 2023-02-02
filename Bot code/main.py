@@ -4,6 +4,7 @@ import os
 import logging
 import passwords
 import json
+import multiprocessing
 
 # Logging the errors in the nextcord.log file.
 logger = logging.getLogger('nextcord')
@@ -21,7 +22,7 @@ def get_prefix(bot, message):
 
 intents = nextcord.Intents().all()
 
-bot = commands.Bot(command_prefix=commands.when_mentioned_or(get_prefix), intents=intents, activity=nextcord.Activity(name="/help", type=0), status=nextcord.Status.online)
+bot = commands.Bot(command_prefix=get_prefix, intents=intents, activity=nextcord.Activity(name="/help", type=0), status=nextcord.Status.online)
 
 @bot.event
 async def on_ready():
@@ -30,6 +31,10 @@ async def on_ready():
     print(bot.user.id)
     print(nextcord.__version__)
     print('------')
+    proc = multiprocessing.current_process()
+    with open("/home/pi/Desktop/pidjson.json", "w") as f:
+        data = {"pid": proc.pid}
+        json.dump(data, f, indent=4)
 
 
 @bot.event

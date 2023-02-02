@@ -29,7 +29,16 @@ class Moderation(commands.Cog):
         )
         msg = await ctx.send(embed=emb)
         await msg.add_reaction("✅")
-        await msg.add_reaction("❌")       
+        await msg.add_reaction("❌")   
+
+
+    @commands.command()
+    @commands.has_permissions(kick_members=True)
+    async def kick(ctx, member: nextcord.Member, *, reason=None):
+        if reason==None:
+            reason="no reason provided"
+        await ctx.guild.kick(member)
+        await ctx.send(f'User {member.mention} has been kicked for {reason}')    
 
 
 def setup(bot):

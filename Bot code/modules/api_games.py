@@ -173,41 +173,6 @@ class Games(commands.Cog):
         embed.add_field(name="Banned", value=apex_ban, inline=False)
 
         await ctx.send(embed=embed)
-   
-
-    @commands.command(description="Sends stats for given summoner", enabled=False)
-    async def riot_stats(self, ctx, summoner_name):
-        embed = nextcord.Embed(
-            title = "Summoner stats",
-            colour = nextcord.Colour.orange()
-        )
-
-        riot_stats_response = requests.get(f"https://eun1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summoner_name}?api_key={passwords.riot_key}")
-        riot_stats_json = riot_stats_response.json()
-
-        riot_name = riot_stats_json["name"]
-        riot_level = riot_stats_json["summonerLevel"]
-        user_id = riot_stats_json["id"]
-
-        riot_stats_response_2 = requests.get(f"https://eun1.api.riotgames.com/lol/league/v4/entries/by-summoner/{user_id}?api_key={self.riot_key}")
-        riot_stats_json_2 = riot_stats_response_2.json()
-
-        if riot_stats_json_2 == []:
-            embed.add_field(name="Summoner name", value=riot_name, inline=False)
-            embed.add_field(name="Summoner level", value=riot_level, inline=False)
-            embed.add_field(name="Ranked type", value="Ranked 5v5", inline=False)
-            embed.add_field(name="Rank", value=f"not ranked")
-        else:
-            riot_type = riot_stats_json_2[0]["queueType"]
-            riot_tier = riot_stats_json_2[0]["tier"]
-            riot_rank = riot_stats_json_2[0]["rank"]
-
-            embed.add_field(name="Summoner name", value=riot_name, inline=False)
-            embed.add_field(name="Summoner level", value=riot_level, inline=False)
-            embed.add_field(name="Ranked type", value=riot_type, inline=False)
-            embed.add_field(name="Rank", value=f"{riot_tier} {riot_rank}")
-
-        await ctx.send(embed=embed)
   
 
     @commands.command(description="Sends current apex servers status", enabled=False)

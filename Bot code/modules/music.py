@@ -53,6 +53,7 @@ class YTDLSource(nextcord.PCMVolumeTransformer):
 class Music(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.queue = []
 
 
     @commands.command(description="joins a voice channel")
