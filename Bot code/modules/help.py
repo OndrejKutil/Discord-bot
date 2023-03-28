@@ -50,10 +50,6 @@ class HelpDropdown(nextcord.ui.Select):
             )
 
         emb1.add_field(name="/apex_map", value="Sends current Apex legends map rotation for all modes", inline=False)
-        emb1.add_field(name="apex_stats", value="Sends stats about player in Apex legends", inline=False)
-        emb1.add_field(name="apex_status", value="Sends current Apex legends servers status", inline=False)
-        emb1.add_field(name="lol_stats", value="Sends stats about League of legends player", inline=False)
-        emb1.add_field(name="epic_free", value="Sends current free games in Epic games store", inline=False)
 
         # Money/Crypto embed
         emb2 = nextcord.Embed(
