@@ -3,9 +3,6 @@
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Medochikita/Discord-bot?include_prereleases&style=for-the-badge) [![GitHub](https://img.shields.io/github/license/Medochikita/Discord-bot?style=for-the-badge)](https://github.com/Medochikita/Discord-bot/blob/main/LICENSE.md) ![GitHub Release Date](https://img.shields.io/github/release-date/Medochikita/Discord-bot?style=for-the-badge) ![GitHub last commit](https://img.shields.io/github/last-commit/Medochikita/Discord-bot?style=for-the-badge)
 <br>
 
-- [Slash commands](#Slash-commands)
-- [Normal commands](#Normal-commands)
-
 - Discord bot build with nextcord framework <br>
 ![Nextcord](https://badgen.net/badge/icon/Nextcord?icon=https://nextcord.dev/icon.svg&label&scale=1.5&style=for-the-badge)
 
