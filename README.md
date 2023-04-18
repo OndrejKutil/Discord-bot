@@ -6,9 +6,6 @@
 - Discord bot build with nextcord framework <br>
 ![Nextcord](https://badgen.net/badge/icon/Nextcord?icon=https://nextcord.dev/icon.svg&label&scale=1.5&style=for-the-badge)
 
-- Bot is hosted on Rasperry pi 4 4GB <br>
-![Raspberry Pi](https://img.shields.io/badge/-RaspberryPi-C51A4A?style=for-the-badge&logo=Raspberry-Pi)
-
 - Prefix is changable using the prefix command
 - Default prefix is !
 
