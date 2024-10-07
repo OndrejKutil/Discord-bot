@@ -5,13 +5,13 @@ import logging
 import passwords
 import json
 import multiprocessing
+import datetime
+import time
 
 # Logging the errors in the nextcord.log file.
-logger = logging.getLogger('nextcord')
-logger.setLevel(logging.INFO)
-handler = logging.FileHandler(filename='./nextcord.log', encoding='utf-8', mode='w')
-handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
-logger.addHandler(handler)
+logger = logging.getLogger(__name__)
+logging.basicConfig(filename="nextcord.log", encoding="utf-8", level=logging.WARNING)
+
 
 def get_prefix(bot, message):
     with open("prefixes.json", "r") as f:
@@ -26,13 +26,10 @@ bot = commands.Bot(command_prefix=get_prefix, intents=intents, activity=nextcord
 
 @bot.event
 async def on_ready():
-    print(f"logged with token and ready!")
-    print(bot.user.name)
-    print(bot.user.id)
-    print(nextcord.__version__)
-    print('------')
+    print(f"Running \nID - {bot.user.id}\nTime - {datetime.datetime.now()}")    
+
     proc = multiprocessing.current_process()
-    with open("/home/pi/Desktop/pidjson.json", "w") as f:
+    with open("./pidjson.json", "w") as f:
         data = {"pid": proc.pid}
         json.dump(data, f, indent=4)
 
@@ -49,40 +46,40 @@ async def on_member_join(member):
 
 @bot.event
 async def on_guild_join(guild):
-    with open("prefixes.json", "r") as f:
+    with open("./prefixes.json", "r") as f:
         prefixes = json.load(f)
 
     prefixes[str(guild.id)] = "!"
 
-    with open("prefixes.json", "w") as f:
+    with open("./prefixes.json", "w") as f:
         json.dump(prefixes, f, indent=4)
 
 
 @bot.event
 async def on_guild_remove(guild):
-    with open("prefixes.json", "r") as f:
+    with open("./prefixes.json", "r") as f:
         prefixes = json.load(f)
 
     prefixes.pop(str(guild.id))
 
-    with open("prefixes.json", "w") as f:
+    with open("./prefixes.json", "w") as f:
         json.dump(prefixes, f, indent=4)
 
 
 @bot.command()
-async def prefix(ctx, prefix : str = None):
+async def prefix(ctx, prefix = None):
     if prefix != None:
-        with open("prefixes.json", "r") as f:
+        with open("./prefixes.json", "r") as f:
             prefixes = json.load(f)
 
         prefixes[str(ctx.guild.id)] = prefix
 
-        with open("prefixes.json", "w") as f:
+        with open("./prefixes.json", "w") as f:
             json.dump(prefixes, f, indent=4)
 
         await ctx.send(f"✅ Changed prefix to **'{prefix}'**")
     else:
-        with open("prefixes.json", "r") as f:
+        with open("./prefixes.json", "r") as f:
             prefixes = json.load(f)
 
         cur_prefix = prefixes[str(ctx.guild.id)]
@@ -101,7 +98,7 @@ async def ping(ctx):
 
 @bot.command(description="Only for owner")
 @commands.is_owner()
-async def load(ctx, extension):
+async def load(ctx, extension: str):
     try:
         bot.load_extension(extension)
         print(f"Succusfuelly loaded {extension} extension")
@@ -114,7 +111,7 @@ async def load(ctx, extension):
 
 @bot.command(description="Only for owner")
 @commands.is_owner()
-async def unload(ctx, extension):
+async def unload(ctx, extension: str):
     try:
         bot.unload_extension(extension)
         print(f"Succusfuelly unloaded {extension} extension")
@@ -123,6 +120,19 @@ async def unload(ctx, extension):
         exc = f"{type(e).__name__}: {e}"
         print(f"Failed to unload extension {extensions}\n{exc}")
         await ctx.send(f"**❌ failed to unload {extension} extension**")
+        
+
+@bot.command(description="Only for owner")
+@commands.is_owner()
+async def reload(ctx, extension: str):
+    try:
+        bot.unload_extension(extension)
+        time.sleep(2)
+        bot.load_extension(extension)
+        await ctx.send(f"**✅ reloaded {extension} extension**")
+    except Exception as e:
+        exc = f"{type(e).__name__}"
+        await ctx.send(f"**❌ failed to reload {extension} extension**")
 
 
 @bot.command()
@@ -133,7 +143,7 @@ async def extensions(ctx):
         ex = ex[8:]
         exten = exten + ex + "\n"
     
-    await ctx.send(f"**{exten}**")
+    await ctx.send(f"{exten}")
 
 
 @bot.command()
@@ -141,20 +151,19 @@ async def extensions(ctx):
 async def servers(ctx):
     servers = []
     for guild in bot.guilds:
-        servers.append(guild)
+        servers.append(guild.name)
 
-    await ctx.send(f"**{servers}**")
+    await ctx.send(f"{', '.join(servers)}")
 
 
 @bot.command()
-@commands.is_owner()
 async def log(ctx):
     await ctx.send(files=[nextcord.File('nextcord.log')])
 
 
 @bot.command()
 @commands.is_owner()
-async def chpr(ctx, type : int, text : str = None, type_type : int = None):
+async def chpr(ctx, type : int, text = None, type_type= None):
     '''
     It changes the bot's presence.
     

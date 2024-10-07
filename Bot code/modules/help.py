@@ -10,9 +10,7 @@ class HelpDropdown(nextcord.ui.Select):
             nextcord.SelectOption(label="Server management", description="commands for managing your server", emoji="🖥️"),
             nextcord.SelectOption(label="Music", description="commands for playing music", emoji="🎶"),
             nextcord.SelectOption(label="Usefull commands", description="Some usefull commands", emoji="👍"),
-            nextcord.SelectOption(label="Game commands", description="commands for info about games and players", emoji="🎮"),
             nextcord.SelectOption(label="Crypto/Money commands", description="commands for info about money and crypto", emoji="💸"),
-            nextcord.SelectOption(label="Fun commands", description="commands for fun", emoji="😂"),
             nextcord.SelectOption(label="Bot admin commands", description="commands for managing this bot", emoji="💾")
 
         ]
@@ -39,36 +37,6 @@ class HelpDropdown(nextcord.ui.Select):
         emb0.add_field(name="/coinflip", value="Randomly decides between two arguments", inline=False)
         emb0.add_field(name="serverinfo", value="Sends information about the server", inline=False)
         emb0.add_field(name="poll <message>", value="Creates a poll users can vote on", inline=False)
-        emb0.add_field(name="avatar <@user>", value="Sends tagged user or yours avatar", inline=False)
-        emb0.add_field(name="dm <@user> <message>", value="Sends message to tagged user", inline=False)
-
-        # Games embed
-        emb1 = nextcord.Embed(
-            title="Commands for games",
-            description="commands for Apex legends, Riot games and more",
-            color=nextcord.Color.blurple()
-            )
-
-        emb1.add_field(name="/apex_map", value="Sends current Apex legends map rotation for all modes", inline=False)
-
-        # Money/Crypto embed
-        emb2 = nextcord.Embed(
-            title="Crypto/Money commands",
-            description="commands for info about money and crypto",
-            color=nextcord.Color.blurple()
-            )
-
-        emb2.add_field(name="crypto <crypto tag>", value="Sends information about crypto u provided", inline=False)
-        emb2.add_field(name="money <value> <curr> <curr>", value="Sends converts from the first to the second currency", inline=False)
-
-        # Fun embed
-        emb3 = nextcord.Embed(
-            title="Fun commands",
-            description="some commands for fun",
-            color=nextcord.Color.blurple()
-            )
-
-        emb3.add_field(name="urban <word>", value="Sends urban dictionary explanation of the word", inline=False)
 
         # Bot admin commands
         emb4 = nextcord.Embed(
@@ -90,7 +58,6 @@ class HelpDropdown(nextcord.ui.Select):
             color=nextcord.Color.blurple()
             )
 
-        emb5.add_field(name="/covid", value="Sends info about COVID-19 cases for CZ", inline=False)
         emb5.add_field(name="/color", value="From RGB values sends the color and other values", inline=False)
 
         # Music embed
@@ -114,12 +81,6 @@ class HelpDropdown(nextcord.ui.Select):
             return await interaction.response.edit_message(embed=emb0)
         elif self.values[0] == "Usefull commands":
             return await interaction.response.edit_message(embed=emb5)
-        elif self.values[0] == "Game commands":
-            return await interaction.response.edit_message(embed=emb1)
-        elif self.values[0] == "Crypto/Money commands":
-            return await interaction.response.edit_message(embed=emb2)
-        elif self.values[0] == "Fun commands":
-            return await interaction.response.edit_message(embed=emb3)
         elif self.values[0] == "Bot admin commands":
             return await interaction.response.edit_message(embed=emb4)
         elif self.values[0] == "Music":
@@ -146,12 +107,12 @@ class Help(commands.Cog):
             color=nextcord.Color.blurple()
             )
 
-        emb.add_field(name="Socials", value="Discord - Medochikita#0509\nGithub - https://github.com/Medochikita\nTikTok - https://www.tiktok.com/@ondrejkutil_", inline=False)
+        emb.add_field(name="Socials", value="Discord - Ondřej Kutil\nGithub - https://github.com/Medochikita\nTikTok - https://www.tiktok.com/@ondrejkutil_", inline=False)
 
         view = HelpView()
 
-        await interaction.response.send_message(embed=emb, view=view)
-
+        await interaction.user.send(embed=emb, view=view)
+	
 
 def setup(bot):
     bot.add_cog(Help(bot))
