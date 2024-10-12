@@ -1,6 +1,8 @@
 import nextcord
 from nextcord.ext import commands
 
+#? MB make new classes and categorize thing a bit better
+
 class HelpDropdown(nextcord.ui.Select):
     def __init__(self):
 
@@ -72,6 +74,7 @@ class HelpDropdown(nextcord.ui.Select):
         emb6.add_field(name="volume <volume>", value="Sets the volume in %", inline=False)
         emb6.add_field(name="pause", value="Pauses currently playing song", inline=False)
         emb6.add_field(name="resume", value="Resummes previously paused song", inline=False)
+        emb6.add_field(name= "playing", value="returns name of currently playing song", inline=False)
         emb6.add_field(name="join", value="Joins a voice channel the user is in", inline=False)
         emb6.add_field(name="leave", value="Leave the voice channel the bot is in", inline=False)
 
@@ -112,6 +115,8 @@ class Help(commands.Cog):
         view = HelpView()
 
         await interaction.user.send(embed=emb, view=view)
+        await interaction.send(f"{interaction.user.mention} Check your DMs")
+        await interaction.delete_original_message(delay=10)
 	
 
 def setup(bot):

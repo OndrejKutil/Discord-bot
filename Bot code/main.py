@@ -6,7 +6,11 @@ import passwords
 import json
 import multiprocessing
 import datetime
-import time
+import asyncio
+
+#!
+#! COMMENT CODE !!! 
+#! in every file, none of the files has commented
 
 # Logging the errors in the nextcord.log file.
 logger = logging.getLogger(__name__)
@@ -14,7 +18,7 @@ logging.basicConfig(filename="nextcord.log", encoding="utf-8", level=logging.WAR
 
 
 def get_prefix(bot, message):
-    with open("prefixes.json", "r") as f:
+    with open("./BOT/prefixes.json", "r") as f:
         prefixes = json.load(f)
 
     return prefixes[str(message.guild.id)]
@@ -22,8 +26,11 @@ def get_prefix(bot, message):
 
 intents = nextcord.Intents().all()
 
+
+# defines the bot object
 bot = commands.Bot(command_prefix=get_prefix, intents=intents, activity=nextcord.Activity(name="/help", type=0), status=nextcord.Status.online)
 
+# what bot does when it gets ready (starts)
 @bot.event
 async def on_ready():
     print(f"Running \nID - {bot.user.id}\nTime - {datetime.datetime.now()}")    
@@ -99,41 +106,39 @@ async def ping(ctx):
 @bot.command(description="Only for owner")
 @commands.is_owner()
 async def load(ctx, extension: str):
+    extension = "modules." + extension
     try:
         bot.load_extension(extension)
-        print(f"Succusfuelly loaded {extension} extension")
         await ctx.send(f"**✅ loaded {extension} extension**")
     except Exception as e:
         exc = f"{type(e).__name__}: {e}"
-        print(f"Failed to load extension {extensions}\n{exc}")
-        await ctx.send(f"**❌ failed to load {extension} extension**")
+        await ctx.send(exc)
 
 
 @bot.command(description="Only for owner")
 @commands.is_owner()
 async def unload(ctx, extension: str):
+    extension = "modules." + extension
     try:
         bot.unload_extension(extension)
-        print(f"Succusfuelly unloaded {extension} extension")
         await ctx.send(f"**✅ unloaded {extension} extension**")
     except Exception as e:
         exc = f"{type(e).__name__}: {e}"
-        print(f"Failed to unload extension {extensions}\n{exc}")
-        await ctx.send(f"**❌ failed to unload {extension} extension**")
+        await ctx.send(exc)
         
 
 @bot.command(description="Only for owner")
 @commands.is_owner()
 async def reload(ctx, extension: str):
+    extension = "modules." + extension
     try:
         bot.unload_extension(extension)
-        time.sleep(2)
+        await asyncio.sleep(1)
         bot.load_extension(extension)
         await ctx.send(f"**✅ reloaded {extension} extension**")
     except Exception as e:
         exc = f"{type(e).__name__}"
-        await ctx.send(f"**❌ failed to reload {extension} extension**")
-
+        await ctx.send(exc)
 
 @bot.command()
 @commands.is_owner()
@@ -143,23 +148,20 @@ async def extensions(ctx):
         ex = ex[8:]
         exten = exten + ex + "\n"
     
-    await ctx.send(f"{exten}")
-
+    await ctx.send(exten)
 
 @bot.command()
 @commands.is_owner()
 async def servers(ctx):
-    servers = []
-    for guild in bot.guilds:
-        servers.append(guild.name)
+    servers = ""
+    for guildName in bot.guilds:
+        servers = servers + guildName + "\n"
 
-    await ctx.send(f"{', '.join(servers)}")
-
+    await ctx.send(servers) 
 
 @bot.command()
 async def log(ctx):
-    await ctx.send(files=[nextcord.File('nextcord.log')])
-
+    await ctx.send(files=[nextcord.File(fp='nextcord.log', filename='nextcord.log', description="log file from bot", force_close=True)])
 
 @bot.command()
 @commands.is_owner()
@@ -199,13 +201,15 @@ async def chpr(ctx, type : int, text = None, type_type= None):
         type_text = "invisible"
         await bot.change_presence(status=nextcord.Status.invisible)
 
-    await ctx.send(f"✅ Changed presence to **{type_text} - with text ({text}) - and type {type_type}**")
+    msg = await ctx.send(f"✅ Changed presence to **{type_text} - with text ({text}) - and type {type_type}**")
+    await ctx.delete_message()
+    await msg.delete()
 
 
 # Loading all the extensions in the modules folder.
 startup_extensions = []
 
-for file in os.listdir("./modules"):
+for file in os.listdir("./BOT/modules"):
         if file.endswith(".py"):
             startup_extensions.append(f"modules.{file[:-3]}")
 

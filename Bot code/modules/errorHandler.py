@@ -1,6 +1,8 @@
 import nextcord
 from nextcord.ext import commands
 
+#? Look into various errors, it trows CommandError most of the time (kinda obvious)
+
 class Error_handler(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -20,8 +22,6 @@ class Error_handler(commands.Cog):
             message = f"**❌ Sorry, {ctx.command} is disabled**"
         elif isinstance(error, commands.MissingRequiredArgument):
             message = "**❌ You missed some argument, try again**"
-        elif isinstance(error, commands.CommandError):
-            message = "**❌ Sorry, something went wrong when executing this command.**"
         elif isinstance(error, commands.PrivateMessageOnly):
             message = "**❌ This command only works in DMs.**"
         elif isinstance(error, commands.NoPrivateMessage):
@@ -33,7 +33,9 @@ class Error_handler(commands.Cog):
         elif isinstance(error, commands.ChannelNotFound):
             message = "**❌ I am sorry, i cant find the chanel you are looking for.**"
         elif isinstance(error, commands.ExtensionError):
-            message = "**❌ I am sorry, it looks like there is an error with the extension where this command i located.**"  
+            message = "**❌ I am sorry, it looks like there is an error with the extension where this command i located.**"
+        elif isinstance(error, commands.CommandError):
+            message = "**❌ Sorry, something went wrong when executing this command.**"  
         else:
             message = "**❌ Sorry, something unexpected has happened.**"
 

@@ -1,5 +1,6 @@
 import nextcord
 from nextcord.ext import commands
+import asyncio
 
 class Moderation(commands.Cog):
     def __init__(self, bot):
@@ -10,7 +11,10 @@ class Moderation(commands.Cog):
         role_count = len(ctx.guild.roles)
         list_of_bots = [bot.mention for bot in ctx.guild.members if bot.bot]
 
-        serverinfoEmbed = nextcord.Embed(timestamp=ctx.message.created_at, color=ctx.author.color)
+        serverinfoEmbed = nextcord.Embed(
+            timestamp=ctx.message.created_at, 
+            color=nextcord.Color.blurple()
+            )
         serverinfoEmbed.add_field(name="Name", value=f"{ctx.guild.name}", inline=False)
         serverinfoEmbed.add_field(name="Member count", value=ctx.guild.member_count, inline=False)
         serverinfoEmbed.add_field(name="Highest role", value=ctx.guild.roles[-2], inline=False)
@@ -25,11 +29,12 @@ class Moderation(commands.Cog):
         emb = nextcord.Embed(
             title= " POLL ",
             description=f"{message}",
-            colour=ctx.author.colour
+            colour=nextcord.Color.blurple()
         )
         msg = await ctx.send(embed=emb)
         await msg.add_reaction("✅")
-        await msg.add_reaction("❌")   
+        await msg.add_reaction("❌")
+        await ctx.message.delete()
 
 
     @commands.command()

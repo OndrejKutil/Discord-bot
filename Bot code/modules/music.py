@@ -6,6 +6,8 @@ from nextcord.ext import commands
 # Suppress noise about console usage from errors
 yt_dlp.utils.bug_reports_message = lambda: ''
 
+#! STOP COMMAND REPAIR
+
 
 ytdl_format_options = {
     'format': 'bestaudio/best',
@@ -54,6 +56,7 @@ class Music(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.queue = []
+        #? sometime mb do the queue? Have to learn how the YTDLSource really works
 
 
     @commands.command(description="joins a voice channel")
@@ -73,6 +76,7 @@ class Music(commands.Cog):
         async with ctx.typing():
             player = await YTDLSource.from_url(url, loop=self.bot.loop, stream=True)
             ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+                                            #? IDK if this does anything, mb try removing it
         
         await ctx.reply('🎶 Now playing: **{}**'.format(player.title))
     
@@ -120,8 +124,10 @@ class Music(commands.Cog):
     
     @commands.command()
     async def stop(self, ctx):
-        await ctx.voice_client.stop()
-
+        try:
+            await ctx.voice_client.stop()
+        except Exception as e:
+            print(e)
     
     @commands.command()
     async def playing(self, ctx):
