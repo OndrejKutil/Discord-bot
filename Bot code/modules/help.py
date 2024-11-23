@@ -1,97 +1,147 @@
 import nextcord
 from nextcord.ext import commands
 
-#? MB make new classes and categorize thing a bit better
+
+class HelpEmbedFactory:
+    @staticmethod
+    def create_home_embed():
+        """Creates and returns the home embed for the help command."""
+        emb = nextcord.Embed(
+            title="Help command",
+            description="For more information check https://github.com/Medochikita/Discord-bot",
+            color=nextcord.Color.blurple()
+        )
+        emb.add_field(name="Socials", value="Discord - Medochikita#0509\nGithub - https://github.com/Medochikita\nTikTok - https://www.tiktok.com/@ondrejkutil_", inline=False)
+        return emb
+
+    @staticmethod
+    def create_moderation_embed():
+        """Creates and returns the moderation embed for the help command."""
+        emb = nextcord.Embed(
+            title="Moderation",
+            description="Commands for moderating your server",
+            color=nextcord.Color.blurple()
+        )
+        emb.add_field(name="prefix [opt: prefix]", value="Sends current prefix or changes to one if you provided it", inline=False)
+        emb.add_field(name="serverinfo", value="Sends information about the server", inline=False)
+        emb.add_field(name="poll [message]", value="Creates a poll users can vote on", inline=False)
+        emb.add_field(name="kick [member] [reason]", value="Kicks a member from the server", inline=False)
+        emb.add_field(name="ban [member] [reason]", value="Bans a member from the server", inline=False)
+        emb.add_field(name="unban [member]", value="Unbans a member from the server", inline=False)
+        emb.add_field(name="clear [amount]", value="Clears a specified number of messages", inline=False)
+        emb.add_field(name="mute [member] [reason]", value="Mutes a member", inline=False)
+        emb.add_field(name="unmute [member]", value="Unmutes a member", inline=False)
+        emb.add_field(name="announce [message]", value="Announces a message to the server", inline=False)
+        emb.add_field(name="slowmode [seconds]", value="Sets slowmode delay for a channel", inline=False)
+        emb.add_field(name="lockdown [lock/unlock]", value="Locks or unlocks a channel", inline=False)
+        emb.add_field(name="nickname [member] [new_nickname]", value="Changes a member's nickname", inline=False)
+        emb.add_field(name="role [add/remove] [member] [role_name]", value="Adds or removes a role from a member", inline=False)
+        emb.add_field(name="createchannel [text/voice] [name]", value="Creates a new text or voice channel", inline=False)
+        emb.add_field(name="deletechannel [name]", value="Deletes a channel", inline=False)
+        return emb
+
+    @staticmethod
+    def create_admin_embed():
+        """Creates and returns the admin embed for the help command."""
+        emb = nextcord.Embed(
+            title="Admin commands",
+            description="Commands for managing the bot",
+            color=nextcord.Color.blurple()
+        )
+        emb.add_field(name="chpr", value="Changes bot's presence and status", inline=False)
+        emb.add_field(name="servers", value="Show in which servers the bot is", inline=False)
+        emb.add_field(name="load [extension]", value="Loads an extension", inline=False)
+        emb.add_field(name="unload [extension]", value="Unloads an extension", inline=False)
+        emb.add_field(name="reload [extension]", value="Reloads an extension", inline=False)
+        emb.add_field(name="extensions", value="Sends all active extensions", inline=False)
+        emb.add_field(name="log", value="Sends the log file", inline=False)
+        return emb
+
+    @staticmethod
+    def create_utility_embed():
+        """Creates and returns the utility embed for the help command."""
+        emb = nextcord.Embed(
+            title="Utility commands",
+            description="Some useful commands",
+            color=nextcord.Color.blurple()
+        )
+        emb.add_field(name="/color", value="From RGB values sends the color and other values", inline=False)
+        return emb
+
+    @staticmethod
+    def create_music_embed():
+        """Creates and returns the music embed for the help command."""
+        emb = nextcord.Embed(
+            title="Music commands",
+            description="Commands for playing music",
+            color=nextcord.Color.blurple()
+        )
+        emb.add_field(name="play [url / name]", value="Plays a song or adds the song to queue", inline=False)
+        emb.add_field(name="stop", value="Stops playing songs and clears the queue", inline=False)
+        emb.add_field(name="volume [volume]", value="Sets the volume in %", inline=False)
+        emb.add_field(name="pause", value="Pauses currently playing song", inline=False)
+        emb.add_field(name="resume", value="Resumes previously paused song", inline=False)
+        emb.add_field(name="playing", value="Returns name of currently playing song", inline=False)
+        emb.add_field(name="join", value="Joins a voice channel the user is in", inline=False)
+        emb.add_field(name="leave", value="Leaves the voice channel the bot is in", inline=False)
+        emb.add_field(name="skip", value="Skips to the next song in queue", inline=False)
+        emb.add_field(name="clear", value="Clears the current queue", inline=False)
+        emb.add_field(name="queue", value="Shows the current queue", inline=False)
+        emb.add_field(name="remove [index]", value="Removes a song from the queue by its index", inline=False)
+        emb.add_field(name="switch [index1] [index2]", value="Switches two songs in the queue by their indices", inline=False)
+        emb.add_field(name="shuffle", value="Shuffles the songs in the queue", inline=False)
+        emb.add_field(name="jump [seconds]", value="Seeks to a specific time in the current song", inline=False)
+        emb.add_field(name="lyrics", value="Fetches and displays the lyrics of the current song", inline=False)
+        emb.add_field(name="history", value="Shows the history of recently played songs", inline=False)
+        emb.add_field(name="clear_history", value="Clears the history of recently played songs", inline=False)
+        return emb
+
+    @staticmethod
+    def create_fun_embed():
+        """Creates and returns the fun embed for the help command."""
+        emb = nextcord.Embed(
+            title="Fun commands",
+            description="Commands for fun and entertainment",
+            color=nextcord.Color.blurple()
+        )
+        emb.add_field(name="/coinflip", value="Randomly decides between two arguments", inline=False)
+        return emb
 
 class HelpDropdown(nextcord.ui.Select):
     def __init__(self):
-
+        """Initializes the dropdown menu for selecting help categories."""
         options = [
 
-            nextcord.SelectOption(label="Home", description="home page for help command", emoji="🏠"),
-            nextcord.SelectOption(label="Server management", description="commands for managing your server", emoji="🖥️"),
-            nextcord.SelectOption(label="Music", description="commands for playing music", emoji="🎶"),
-            nextcord.SelectOption(label="Usefull commands", description="Some usefull commands", emoji="👍"),
-            nextcord.SelectOption(label="Crypto/Money commands", description="commands for info about money and crypto", emoji="💸"),
-            nextcord.SelectOption(label="Bot admin commands", description="commands for managing this bot", emoji="💾")
+            nextcord.SelectOption(label="Home", description="Home page for help command", emoji="🏠"),
+            nextcord.SelectOption(label="Moderation", description="Commands for moderating your server", emoji="🛠️"),
+            nextcord.SelectOption(label="Music", description="Commands for playing music", emoji="🎶"),
+            nextcord.SelectOption(label="Utility", description="Some useful commands", emoji="🔧"),
+            nextcord.SelectOption(label="Admin", description="Commands for managing this bot", emoji="💾"),
+            nextcord.SelectOption(label="Fun", description="Commands for fun and entertainment", emoji="🎉")
 
         ]
-        super().__init__(placeholder="Choose cathegory", min_values=1, max_values=1, options=options)
+        super().__init__(placeholder="Choose category", min_values=1, max_values=1, options=options)
 
     async def callback(self, interaction: nextcord.Interaction):
-        # Main embed
-        emb = nextcord.Embed(
-            title="Help command",
-            description="For more information info check https://github.com/Medochikita/Discord-bot",
-            color=nextcord.Color.blurple()
-            )
-
-        emb.add_field(name="Socials", value="Discord - Medochikita#0509\nGithub - https://github.com/Medochikita\nTikTok - https://www.tiktok.com/@ondrejkutil_", inline=False)
-
-        # Server management embed
-        emb0 = nextcord.Embed(
-            title="Server mamagement",
-            description="Command for managing your server",
-            color=nextcord.Color.blurple()
-            )
-
-        emb0.add_field(name="prefix <opt: prefix>", value="Sends current prefix or changes to one if you provided it", inline=False)
-        emb0.add_field(name="/coinflip", value="Randomly decides between two arguments", inline=False)
-        emb0.add_field(name="serverinfo", value="Sends information about the server", inline=False)
-        emb0.add_field(name="poll <message>", value="Creates a poll users can vote on", inline=False)
-
-        # Bot admin commands
-        emb4 = nextcord.Embed(
-            title="Bot admin commands",
-            description="Commands for managing the bot",
-            color=nextcord.Color.blurple()
-            )
-
-        emb4.add_field(name="chpr", value="Changes bots presence and status", inline=False)
-        emb4.add_field(name="servers", value="Show in which servers the bot is", inline=False)
-        emb4.add_field(name="load", value="Loads an extension", inline=False)
-        emb4.add_field(name="unload", value="Unloads an extension", inline=False) 
-        emb4.add_field(name="extensions", value="Sends all active extensions", inline=False)
-
-        # Usefull commands embed
-        emb5 = nextcord.Embed(
-            title="usefull commands",
-            description="Some usefull commands",
-            color=nextcord.Color.blurple()
-            )
-
-        emb5.add_field(name="/color", value="From RGB values sends the color and other values", inline=False)
-
-        # Music embed
-        emb6 = nextcord.Embed(
-            title="Music commands",
-            description="commands for playing music",
-            color=nextcord.Color.blurple()
-        )
-
-        emb6.add_field(name="play <url / name>", value="Plays a song or adds the song to queue", inline=False)
-        emb6.add_field(name="stop", value="Stops playing songs and clears the queue", inline=False)
-        emb6.add_field(name="volume <volume>", value="Sets the volume in %", inline=False)
-        emb6.add_field(name="pause", value="Pauses currently playing song", inline=False)
-        emb6.add_field(name="resume", value="Resummes previously paused song", inline=False)
-        emb6.add_field(name= "playing", value="returns name of currently playing song", inline=False)
-        emb6.add_field(name="join", value="Joins a voice channel the user is in", inline=False)
-        emb6.add_field(name="leave", value="Leave the voice channel the bot is in", inline=False)
-
+        """Handles the interaction when a dropdown option is selected."""
         if self.values[0] == "Home":
-            return await interaction.response.edit_message(embed=emb)
-        elif self.values[0] == "Server management":
-            return await interaction.response.edit_message(embed=emb0)
-        elif self.values[0] == "Usefull commands":
-            return await interaction.response.edit_message(embed=emb5)
-        elif self.values[0] == "Bot admin commands":
-            return await interaction.response.edit_message(embed=emb4)
+            embed = HelpEmbedFactory.create_home_embed()
+        elif self.values[0] == "Moderation":
+            embed = HelpEmbedFactory.create_moderation_embed()
+        elif self.values[0] == "Utility":
+            embed = HelpEmbedFactory.create_utility_embed()
+        elif self.values[0] == "Admin":
+            embed = HelpEmbedFactory.create_admin_embed()
         elif self.values[0] == "Music":
-            return await interaction.response.edit_message(embed=emb6)
+            embed = HelpEmbedFactory.create_music_embed()
+        elif self.values[0] == "Fun":
+            embed = HelpEmbedFactory.create_fun_embed()
+        await interaction.response.edit_message(embed=embed)
 
 
 class HelpView(nextcord.ui.View):
     def __init__(self):
+        """Initializes the view containing the help dropdown menu."""
         super().__init__()
 
         self.add_item(HelpDropdown())
@@ -99,18 +149,19 @@ class HelpView(nextcord.ui.View):
 
 class Help(commands.Cog):
     def __init__(self, bot):
+        """Initializes the Help cog with the bot instance."""
         self.bot = bot
 
     @nextcord.slash_command(description="Simple help command")
-    async def help(self, interaction : nextcord.Interaction):
-
+    async def help(self, interaction : nextcord.Interaction) -> None:
+        """Sends the help command embed and view to the user via DM."""
         emb = nextcord.Embed(
             title="Help command",
             description="For more information info check https://github.com/Medochikita/Discord-bot \nDefault prefix is: '!'",
             color=nextcord.Color.blurple()
             )
 
-        emb.add_field(name="Socials", value="Discord - Ondřej Kutil\nGithub - https://github.com/Medochikita\nTikTok - https://www.tiktok.com/@ondrejkutil_", inline=False)
+        emb.add_field(name="Socials", value="Discord - Ondřej Kutil\nGithub - https://github.com/Medochikita", inline=False)
 
         view = HelpView()
 
@@ -120,4 +171,5 @@ class Help(commands.Cog):
 	
 
 def setup(bot):
+    """Adds the Help cog to the bot."""
     bot.add_cog(Help(bot))

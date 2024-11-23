@@ -1,0 +1,16 @@
+**/__pycache__/
+*/__pycache__/
+/__pycache__/
+/.vscode/
+*/.vscode/
+/.vscode/
+.vscode/
+.vscode/
+.vscode/
+*.pyc
+*.pyo
+*.pyd
+*.pyw
+*.pyz
+*.pyzw
+*.py~

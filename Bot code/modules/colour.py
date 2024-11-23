@@ -8,23 +8,29 @@ class Colour(commands.Cog):
 
     @nextcord.slash_command(description='Gets color from rgb values')
     async def color(
-        
         self, 
-        interaction : nextcord.Interaction, 
+        interaction: nextcord.Interaction, 
         red: int = nextcord.SlashOption(description="Red", required=True),
         green: int = nextcord.SlashOption(description="Green", required=True),
         blue: int = nextcord.SlashOption(description="Blue", required=True)
-        ):
-        
-        # It takes in 3 arguments, red, green, and blue, and then it sends a request to thecolorapi.com, and then it sends a message with the color information
+    ) -> None:
+        # Validate RGB values
+        if not (0 <= red <= 255 and 0 <= green <= 255 and 0 <= blue <= 255):
+            await interaction.response.send_message("RGB values must be between 0 and 255.", ephemeral=True)
+            return
 
         rgb = f"{red}, {green}, {blue}"
-
         url = f"https://www.thecolorapi.com/id?rgb={red},{green},{blue}&format=json"
-        response = requests.get(url=url)
-        data = response.json()
-        
-        hex = data["hex"]["value"]
+
+        try:
+            response = requests.get(url=url)
+            response.raise_for_status()
+            data = response.json()
+        except requests.RequestException as e:
+            await interaction.response.send_message(f"Failed to fetch color data: {e}", ephemeral=True)
+            return
+
+        hx = data["hex"]["value"]
         hsl = data["hsl"]["value"]
         hsv = data["hsv"]["value"]
         name = data["name"]["value"]
@@ -32,11 +38,11 @@ class Colour(commands.Cog):
         xyz = data["XYZ"]["value"]
 
         emb = nextcord.Embed(
-            title= f"{name}",
-            colour=nextcord.Colour.from_rgb(int(red), int(green), int(blue))
+            title=f"{name}",
+            colour=nextcord.Colour.from_rgb(red, green, blue)
         )
         
-        emb.add_field(name="Hex", value=f"{hex}")
+        emb.add_field(name="Hex", value=f"{hx}")
         emb.add_field(name="RGB", value=f"{rgb}")
         emb.add_field(name="HSL", value=f"{hsl}")
         emb.add_field(name="HSV", value=f"{hsv}")
